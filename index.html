@@ -734,7 +734,6 @@
     <script>
         // 🔴 YAHAN APNA GOOGLE APPS SCRIPT URL DAALO
         const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
-        
         const form = document.getElementById('applicationForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
@@ -753,7 +752,7 @@
             });
         });
         
-        // Form submit handler - EXACTLY aapke pattern mein
+        // 📌 FIXED FORM SUBMIT HANDLER - Exactly working pattern jaisa
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -788,44 +787,47 @@
             setLoading(true);
             
             try {
-                // FormData banao - aapke pattern ke hisaab se
-                const formData = new FormData();
+                // 🔴 FIX 1: URLSearchParams use karo (working pattern)
+                const formData = new URLSearchParams();
                 
                 // Add arrays as comma-separated strings
                 formData.append('positions', positions.join(', '));
                 formData.append('journals', journals.join(', '));
                 
-                // Add all other fields
-                formData.append('fullName', document.getElementById('fullName').value);
-                formData.append('email', document.getElementById('email').value);
-                formData.append('phone', document.getElementById('phone').value);
-                formData.append('affiliation', document.getElementById('affiliation').value);
-                formData.append('department', document.getElementById('department').value);
-                formData.append('designation', document.getElementById('designation').value);
-                formData.append('country', document.getElementById('country').value);
-                formData.append('institutionalEmail', document.getElementById('institutionalEmail').value);
-                formData.append('googleScholar', document.getElementById('googleScholar').value);
-                formData.append('orcid', document.getElementById('orcid').value);
-                formData.append('scopusId', document.getElementById('scopusId').value);
-                formData.append('researchGate', document.getElementById('researchGate').value);
-                formData.append('highestDegree', document.getElementById('highestDegree').value);
-                formData.append('phdYear', document.getElementById('phdYear').value);
-                formData.append('totalPublications', document.getElementById('totalPublications').value);
-                formData.append('hindex', document.getElementById('hindex').value);
-                formData.append('citations', document.getElementById('citations').value);
-                formData.append('reviewExperience', document.getElementById('reviewExperience').value);
-                formData.append('editorExperience', document.getElementById('editorExperience').value);
-                formData.append('guestEditorExperience', document.getElementById('guestEditorExperience').value);
-                formData.append('expertise1', document.getElementById('expertise1').value);
-                formData.append('expertise2', document.getElementById('expertise2').value);
-                formData.append('expertise3', document.getElementById('expertise3').value);
-                formData.append('availability', document.getElementById('availability').value);
+                // Add all other fields with null checks
+                formData.append('fullName', document.getElementById('fullName')?.value || '');
+                formData.append('email', document.getElementById('email')?.value || '');
+                formData.append('phone', document.getElementById('phone')?.value || '');
+                formData.append('affiliation', document.getElementById('affiliation')?.value || '');
+                formData.append('department', document.getElementById('department')?.value || '');
+                formData.append('designation', document.getElementById('designation')?.value || '');
+                formData.append('country', document.getElementById('country')?.value || '');
+                formData.append('institutionalEmail', document.getElementById('institutionalEmail')?.value || '');
+                formData.append('googleScholar', document.getElementById('googleScholar')?.value || '');
+                formData.append('orcid', document.getElementById('orcid')?.value || '');
+                formData.append('scopusId', document.getElementById('scopusId')?.value || '');
+                formData.append('researchGate', document.getElementById('researchGate')?.value || '');
+                formData.append('highestDegree', document.getElementById('highestDegree')?.value || '');
+                formData.append('phdYear', document.getElementById('phdYear')?.value || '');
+                formData.append('totalPublications', document.getElementById('totalPublications')?.value || '');
+                formData.append('hindex', document.getElementById('hindex')?.value || '');
+                formData.append('citations', document.getElementById('citations')?.value || '');
+                formData.append('reviewExperience', document.getElementById('reviewExperience')?.value || '');
+                formData.append('editorExperience', document.getElementById('editorExperience')?.value || '');
+                formData.append('guestEditorExperience', document.getElementById('guestEditorExperience')?.value || '');
+                formData.append('expertise1', document.getElementById('expertise1')?.value || '');
+                formData.append('expertise2', document.getElementById('expertise2')?.value || '');
+                formData.append('expertise3', document.getElementById('expertise3')?.value || '');
+                formData.append('availability', document.getElementById('availability')?.value || '');
                 formData.append('declaration', 'Yes');
                 
-                // Send data - EXACTLY aapke pattern mein
+                // 🔴 FIX 2: Working fetch pattern with headers
                 const response = await fetch(scriptURL, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
                 });
                 
                 if (response.ok) {
@@ -834,6 +836,16 @@
                     
                     showStatus('✅ Application submitted successfully!', 'success');
                     
+                    // Collect data for popup BEFORE reset
+                    const popupData = {
+                        name: document.getElementById('fullName')?.value || '',
+                        email: document.getElementById('email')?.value || '',
+                        positions: positions,
+                        journals: journals,
+                        highestDegree: document.getElementById('highestDegree')?.value || '',
+                        totalPublications: document.getElementById('totalPublications')?.value || ''
+                    };
+                    
                     // Form reset
                     form.reset();
                     document.querySelectorAll('.checkbox-item').forEach(item => {
@@ -841,14 +853,7 @@
                     });
                     
                     // SHAANDAR POPUP with data
-                    showPopup({
-                        name: document.getElementById('fullName').value,
-                        email: document.getElementById('email').value,
-                        positions: positions,
-                        journals: journals,
-                        highestDegree: document.getElementById('highestDegree').value,
-                        totalPublications: document.getElementById('totalPublications').value
-                    });
+                    showPopup(popupData);
                     
                 } else {
                     throw new Error('Server error: ' + response.status);
@@ -867,29 +872,26 @@
             // Fill applicant details
             document.getElementById('popupName').textContent = data.name || 'N/A';
             document.getElementById('popupEmail').textContent = data.email || 'N/A';
-            document.getElementById('popupPosition').textContent = data.positions.join(', ') || 'N/A';
-            document.getElementById('popupJournal').textContent = data.journals.join(', ') || 'N/A';
+            document.getElementById('popupPosition').textContent = Array.isArray(data.positions) ? data.positions.join(', ') : data.positions || 'N/A';
+            document.getElementById('popupJournal').textContent = Array.isArray(data.journals) ? data.journals.join(', ') : data.journals || 'N/A';
             
             // Create badges
             const badgeContainer = document.getElementById('badgeContainer');
-            badgeContainer.innerHTML = '';
-            
-            if (data.highestDegree === 'PhD') {
-                badgeContainer.innerHTML += '<span class="badge">🎓 PhD</span>';
-            }
-            if (parseInt(data.totalPublications) > 20) {
-                badgeContainer.innerHTML += '<span class="badge">📚 Senior Researcher</span>';
+            if (badgeContainer) {
+                badgeContainer.innerHTML = '';
+                
+                if (data.highestDegree === 'PhD') {
+                    badgeContainer.innerHTML += '<span class="badge">🎓 PhD</span>';
+                }
+                if (parseInt(data.totalPublications) > 20) {
+                    badgeContainer.innerHTML += '<span class="badge">📚 Senior Researcher</span>';
+                }
             }
             
             // Show modal
-            modal.style.display = 'block';
-            
-            // Escape key handler
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
+            if (modal) {
+                modal.style.display = 'block';
+            }
         }
         
         // Membership selection
@@ -926,7 +928,9 @@
         
         // Close modal function
         function closeModal() {
-            modal.style.display = 'none';
+            if (modal) {
+                modal.style.display = 'none';
+            }
             selectedMembership = null;
         }
         
@@ -937,24 +941,33 @@
             }
         }
         
+        // Escape key handler
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
         // Loading state
         function setLoading(isLoading) {
-            if (isLoading) {
-                submitBtn.disabled = true;
-                btnText.innerHTML = '⏳ Submitting...';
-            } else {
-                submitBtn.disabled = false;
-                btnText.innerHTML = '📤 Submit Application';
+            if (submitBtn) {
+                submitBtn.disabled = isLoading;
+                if (btnText) {
+                    btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
+                }
             }
         }
         
         // Status message
         function showStatus(message, type) {
-            statusDiv.textContent = message;
-            statusDiv.className = type;
-            setTimeout(() => {
-                statusDiv.style.display = 'none';
-            }, 5000);
+            if (statusDiv) {
+                statusDiv.textContent = message;
+                statusDiv.className = type;
+                statusDiv.style.display = 'block';
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
         }
     </script>
 </body>
