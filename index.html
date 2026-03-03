@@ -13,13 +13,13 @@
         
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
             min-height: 100vh;
             padding: 30px 20px;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -28,7 +28,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -39,6 +39,11 @@
             margin-bottom: 10px;
         }
         
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
         .form-container {
             padding: 30px;
         }
@@ -46,23 +51,28 @@
         .section {
             background: #f8f9fa;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             margin-bottom: 25px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #2c3e50;
         }
         
         .section h3 {
-            color: #333;
-            margin-bottom: 15px;
+            color: #2c3e50;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.2em;
+        }
+        
+        .section h3 i {
+            font-size: 1.3em;
         }
         
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
             margin-bottom: 10px;
         }
         
@@ -70,7 +80,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 10px;
+            padding: 12px;
             background: white;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
@@ -79,13 +89,13 @@
         }
         
         .checkbox-item:hover {
-            border-color: #667eea;
-            background: #f0f3ff;
+            border-color: #2c3e50;
+            background: #e8f0fe;
         }
         
         .checkbox-item.selected {
-            border-color: #667eea;
-            background: #e6e9ff;
+            border-color: #27ae60;
+            background: #e8f8f0;
         }
         
         .checkbox-item input[type="checkbox"] {
@@ -106,6 +116,12 @@
             gap: 20px;
         }
         
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
         .form-group {
             margin-bottom: 15px;
         }
@@ -114,23 +130,46 @@
             grid-column: span 2;
         }
         
+        .full-width-3 {
+            grid-column: span 3;
+        }
+        
+        .full-width-4 {
+            grid-column: span 4;
+        }
+        
         label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
-            font-weight: 500;
+            color: #2c3e50;
+            font-weight: 600;
             font-size: 14px;
         }
         
         .required::after {
             content: "*";
-            color: #ff4444;
+            color: #e74c3c;
             margin-left: 4px;
+            font-size: 16px;
+        }
+        
+        .optional {
+            color: #7f8c8d;
+            font-size: 12px;
+            font-weight: normal;
+            margin-left: 5px;
+        }
+        
+        .hint {
+            color: #7f8c8d;
+            font-size: 11px;
+            margin-top: 3px;
+            font-style: italic;
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px;
             border: 2px solid #e0e0e0;
             border-radius: 6px;
             font-size: 14px;
@@ -139,12 +178,22 @@
         
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+        
+        input[type="url"] {
+            font-family: monospace;
+        }
+        
+        .id-format {
+            font-size: 11px;
+            color: #3498db;
+            margin-top: 3px;
         }
         
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -154,11 +203,12 @@
             cursor: pointer;
             width: 100%;
             transition: all 0.3s;
+            margin-top: 20px;
         }
         
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
         }
         
         button:disabled {
@@ -188,7 +238,7 @@
             width: 50px;
             height: 50px;
             border: 5px solid white;
-            border-top: 5px solid #667eea;
+            border-top: 5px solid #2c3e50;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -223,22 +273,22 @@
         }
         
         .toast.success {
-            background: #4CAF50;
+            background: #27ae60;
         }
         
         .toast.error {
-            background: #f44336;
+            background: #e74c3c;
         }
         
         .toast.show {
             display: block;
         }
         
-        @media (max-width: 600px) {
-            .grid-2, .grid-3 {
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .grid-4 {
                 grid-template-columns: 1fr;
             }
-            .full-width {
+            .full-width, .full-width-3, .full-width-4 {
                 grid-column: span 1;
             }
         }
@@ -247,15 +297,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Editorial Board Application</h1>
-            <p>Join us as Associate Editor, Guest Editor, or Reviewer</p>
+            <h1>📚 Editorial Board Application Form</h1>
+            <p>Associate Editor | Guest Editor | Reviewer</p>
         </div>
         
         <div class="form-container">
             <form id="applicationForm">
-                <!-- Positions -->
+                <!-- Positions Selection -->
                 <div class="section">
-                    <h3>📌 Select Positions (Tick any)</h3>
+                    <h3><i>📌</i> Position Applied For (Select any)</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" name="positions" value="Associate Editor">
@@ -272,95 +322,146 @@
                     </div>
                 </div>
                 
-                <!-- Journals -->
+                <!-- Journals Selection -->
                 <div class="section">
-                    <h3>📚 Select Journals (Tick any)</h3>
+                    <h3><i>📚</i> Journals (Select any)</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJSSR (2583-7877)">
-                            <span>🌍 Science & Social Science (2583-7877)</span>
+                            <span>🌍 International Journal of Science and Social Science Research<br><small>ISSN: 2583-7877</small></span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJSESR (3049-2793)">
-                            <span>⚙️ Science & Engineering (3049-2793)</span>
+                            <span>⚙️ International Journal of Science and Engineering Science Research<br><small>ISSN: 3049-2793</small></span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJEIR (3049-4052)">
-                            <span>🎓 Educational Innovations (3049-4052)</span>
+                            <span>🎓 International Journal of Educational Innovations and Research<br><small>ISSN: 3049-4052</small></span>
                         </label>
                     </div>
                 </div>
                 
-                <!-- Personal Info -->
+                <!-- Personal Information -->
                 <div class="section">
-                    <h3>👤 Personal Information</h3>
+                    <h3><i>👤</i> Personal Information</h3>
                     <div class="grid-2">
                         <div class="form-group full-width">
-                            <label class="required">Full Name</label>
-                            <input type="text" name="fullName" id="fullName" required>
+                            <label class="required">Full Name (with Title)</label>
+                            <input type="text" name="fullName" id="fullName" required placeholder="Prof./Dr. John Doe">
+                            <div class="hint">Include your title (Prof/Dr/Mr/Mrs)</div>
                         </div>
                         
                         <div class="form-group">
                             <label class="required">Email</label>
-                            <input type="email" name="email" id="email" required>
+                            <input type="email" name="email" id="email" required placeholder="john.doe@university.edu">
                         </div>
                         
                         <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" name="phone" id="phone">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>ORCID</label>
-                            <input type="text" name="orcid" id="orcid" placeholder="0000-0002-1825-0097">
+                            <label class="required">Phone (with WhatsApp)</label>
+                            <input type="text" name="phone" id="phone" required placeholder="+1 234 567 890">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Professional Info -->
+                <!-- Institutional Information (MUST) -->
                 <div class="section">
-                    <h3>🏛️ Professional Information</h3>
+                    <h3><i>🏛️</i> Institutional Information <span style="color:#e74c3c; font-size:0.8em;">(Mandatory)</span></h3>
                     <div class="grid-2">
                         <div class="form-group full-width">
-                            <label class="required">Affiliation/Institution</label>
-                            <input type="text" name="affiliation" id="affiliation" required>
+                            <label class="required">Current Affiliation/Institution</label>
+                            <input type="text" name="affiliation" id="affiliation" required placeholder="University/Institute Name">
                         </div>
                         
                         <div class="form-group">
                             <label class="required">Department</label>
-                            <input type="text" name="department" id="department" required>
+                            <input type="text" name="department" id="department" required placeholder="Department Name">
                         </div>
                         
                         <div class="form-group">
-                            <label class="required">Designation</label>
-                            <input type="text" name="designation" id="designation" required>
+                            <label class="required">Designation/Position</label>
+                            <input type="text" name="designation" id="designation" required placeholder="Professor/Associate Professor/Scientist">
                         </div>
                         
                         <div class="form-group">
                             <label class="required">Country</label>
-                            <input type="text" name="country" id="country" required>
+                            <input type="text" name="country" id="country" required placeholder="Country Name">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required">Institutional Profile/Lab Website</label>
+                            <input type="url" name="institutionalProfile" id="institutionalProfile" required placeholder="https://www.university.edu/faculty/profile">
+                            <div class="hint">Your official university/institution profile page link</div>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="required">Institutional Email ID</label>
+                            <input type="email" name="institutionalEmail" id="institutionalEmail" required placeholder="john.doe@university.edu">
+                            <div class="hint">Must be your official university email</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Academic -->
+                <!-- Academic IDs Section -->
                 <div class="section">
-                    <h3>🎓 Academic Qualifications</h3>
+                    <h3><i>🔬</i> Academic & Researcher IDs <span style="color:#7f8c8d; font-size:0.8em;">(At least one required)</span></h3>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Google Scholar ID/Profile</label>
+                            <input type="url" name="googleScholar" id="googleScholar" placeholder="https://scholar.google.com/citations?user=...">
+                            <div class="id-format">Format: scholar.google.com/citations?user=XXXX</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>ResearchGate Profile</label>
+                            <input type="url" name="researchGate" id="researchGate" placeholder="https://www.researchgate.net/profile/...">
+                            <div class="id-format">Format: researchgate.net/profile/YourName</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Scopus Author ID</label>
+                            <input type="text" name="scopusId" id="scopusId" placeholder="57212345678">
+                            <div class="id-format">Scopus ID (8-11 digits)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>ORCID ID</label>
+                            <input type="text" name="orcid" id="orcid" placeholder="0000-0002-1825-0097">
+                            <div class="id-format">Format: 0000-0002-1825-0097</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Web of Science/ResearcherID</label>
+                            <input type="text" name="researcherId" id="researcherId" placeholder="A-1234-2020">
+                            <div class="id-format">ResearcherID or Web of Science ID</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>PubMed ID/NIH Profile</label>
+                            <input type="text" name="pubmedId" id="pubmedId" placeholder="Enter ID if applicable">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Academic Qualifications -->
+                <div class="section">
+                    <h3><i>🎓</i> Academic Qualifications</h3>
                     <div class="grid-3">
                         <div class="form-group">
                             <label class="required">Highest Degree</label>
                             <select name="highestDegree" id="highestDegree" required>
-                                <option value="">Select</option>
+                                <option value="">Select Degree</option>
                                 <option value="PhD">PhD</option>
                                 <option value="MD">MD</option>
+                                <option value="DSc">DSc</option>
                                 <option value="Master's">Master's</option>
                                 <option value="Bachelor's">Bachelor's</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label>PhD Year</label>
+                            <label>Year of PhD/Doctorate</label>
                             <input type="text" name="phdYear" id="phdYear" placeholder="2020">
+                            <div class="hint">Year of completion</div>
                         </div>
                         
                         <div class="form-group">
@@ -369,8 +470,13 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>H-index</label>
+                            <label>h-index (Scopus/Google)</label>
                             <input type="number" name="hindex" id="hindex" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>i10-index</label>
+                            <input type="number" name="i10index" id="i10index" min="0">
                         </div>
                         
                         <div class="form-group">
@@ -382,81 +488,94 @@
                 
                 <!-- Experience -->
                 <div class="section">
-                    <h3>💼 Experience</h3>
+                    <h3><i>💼</i> Editorial & Review Experience</h3>
                     <div class="grid-3">
                         <div class="form-group">
-                            <label>Review Experience (Years)</label>
+                            <label>Peer Review Experience (Years)</label>
                             <input type="number" name="reviewExperience" id="reviewExperience" min="0">
                         </div>
                         
                         <div class="form-group">
-                            <label>Editor Experience (Years)</label>
+                            <label>Editorial Board Experience (Years)</label>
                             <input type="number" name="editorExperience" id="editorExperience" min="0">
                         </div>
                         
                         <div class="form-group">
-                            <label>Guest Editor (Years)</label>
+                            <label>Guest Editor Experience (Years)</label>
                             <input type="number" name="guestEditorExperience" id="guestEditorExperience" min="0">
                         </div>
                         
                         <div class="form-group">
-                            <label>Previous Reviews (Count)</label>
+                            <label>Total Reviews Done</label>
                             <input type="number" name="previousReviews" id="previousReviews" min="0">
                         </div>
                         
                         <div class="form-group full-width">
-                            <label>Previous Editorial Boards</label>
-                            <textarea name="previousBoards" id="previousBoards" rows="2"></textarea>
+                            <label>Previous Editorial Board Memberships</label>
+                            <textarea name="previousBoards" id="previousBoards" rows="2" placeholder="List journals where you served as editor/reviewer"></textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Expertise -->
+                <!-- Areas of Expertise -->
                 <div class="section">
-                    <h3>🔬 Areas of Expertise</h3>
+                    <h3><i>🔬</i> Areas of Expertise</h3>
                     <div class="grid-3">
                         <div class="form-group">
-                            <label class="required">Area 1</label>
-                            <input type="text" name="expertise1" id="expertise1" required>
+                            <label class="required">Primary Research Area 1</label>
+                            <input type="text" name="expertise1" id="expertise1" required placeholder="e.g., Machine Learning">
                         </div>
                         <div class="form-group">
-                            <label class="required">Area 2</label>
-                            <input type="text" name="expertise2" id="expertise2" required>
+                            <label class="required">Research Area 2</label>
+                            <input type="text" name="expertise2" id="expertise2" required placeholder="e.g., Data Science">
                         </div>
                         <div class="form-group">
-                            <label class="required">Area 3</label>
-                            <input type="text" name="expertise3" id="expertise3" required>
+                            <label class="required">Research Area 3</label>
+                            <input type="text" name="expertise3" id="expertise3" required placeholder="e.g., Artificial Intelligence">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Additional Keywords (comma separated)</label>
+                            <input type="text" name="keywords" id="keywords" placeholder="deep learning, neural networks, computer vision">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Additional -->
+                <!-- Availability -->
                 <div class="section">
-                    <h3>📎 Additional Information</h3>
+                    <h3><i>📅</i> Availability & Additional Info</h3>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Availability (Papers/month)</label>
-                            <select name="availability" id="availability">
+                            <label class="required">Available for Reviews (per month)</label>
+                            <select name="availability" id="availability" required>
                                 <option value="">Select</option>
                                 <option value="1-2">1-2 papers/month</option>
                                 <option value="3-4">3-4 papers/month</option>
                                 <option value="5+">5+ papers/month</option>
+                                <option value="Special Issue Only">Special Issue Only</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label>CV/Resume Link</label>
-                            <input type="url" name="cvLink" id="cvLink" placeholder="Google Drive/Dropbox link">
+                            <input type="url" name="cvLink" id="cvLink" placeholder="Google Drive/Dropbox/Institutional link">
                         </div>
                         
                         <div class="form-group full-width">
                             <label>Additional Comments</label>
-                            <textarea name="comments" id="comments" rows="2"></textarea>
+                            <textarea name="comments" id="comments" rows="3" placeholder="Any additional information you'd like to share..."></textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Submit Button -->
+                <!-- Declaration -->
+                <div class="section" style="background: #fff3e0;">
+                    <h3><i>✓</i> Declaration</h3>
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" name="declaration" id="declaration" required>
+                        <span>I hereby declare that all the information provided is true and correct to the best of my knowledge. I agree to the terms and conditions of the editorial board.</span>
+                    </label>
+                </div>
+                
                 <button type="submit" id="submitBtn">📤 Submit Application</button>
             </form>
         </div>
@@ -471,10 +590,10 @@
     <div class="toast" id="toast"></div>
     
     <script>
-        // YAHAN APNA GOOGLE APPS SCRIPT URL DAALO
-        const APPS_SCRIPT_URL = 'YAHAN_APNA_URL_DAALO';
+        // 🔴 APNA GOOGLE APPS SCRIPT URL YAHAN DAALO
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
         
-        // Checkbox select effect
+        // Checkbox visual effect
         document.querySelectorAll('.checkbox-item').forEach(item => {
             const checkbox = item.querySelector('input[type="checkbox"]');
             
@@ -487,7 +606,7 @@
             });
         });
         
-        // Form submit
+        // Form submission
         document.getElementById('applicationForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
@@ -514,22 +633,46 @@
                 return;
             }
             
-            // Form data
+            if (!document.getElementById('declaration').checked) {
+                showToast('Please accept the declaration!', 'error');
+                return;
+            }
+            
+            // Check if at least one academic ID is provided
+            const googleScholar = document.getElementById('googleScholar').value;
+            const researchGate = document.getElementById('researchGate').value;
+            const scopusId = document.getElementById('scopusId').value;
+            const orcid = document.getElementById('orcid').value;
+            
+            if (!googleScholar && !researchGate && !scopusId && !orcid) {
+                showToast('Please provide at least one academic ID (Google Scholar, ResearchGate, Scopus, or ORCID)', 'error');
+                return;
+            }
+            
+            // Collect all form data
             const formData = {
                 positions: positions,
                 journals: journals,
                 fullName: document.getElementById('fullName').value,
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
-                orcid: document.getElementById('orcid').value,
                 affiliation: document.getElementById('affiliation').value,
                 department: document.getElementById('department').value,
                 designation: document.getElementById('designation').value,
                 country: document.getElementById('country').value,
+                institutionalProfile: document.getElementById('institutionalProfile').value,
+                institutionalEmail: document.getElementById('institutionalEmail').value,
+                googleScholar: document.getElementById('googleScholar').value,
+                researchGate: document.getElementById('researchGate').value,
+                scopusId: document.getElementById('scopusId').value,
+                orcid: document.getElementById('orcid').value,
+                researcherId: document.getElementById('researcherId').value,
+                pubmedId: document.getElementById('pubmedId').value,
                 highestDegree: document.getElementById('highestDegree').value,
                 phdYear: document.getElementById('phdYear').value,
                 totalPublications: document.getElementById('totalPublications').value,
                 hindex: document.getElementById('hindex').value,
+                i10index: document.getElementById('i10index').value,
                 citations: document.getElementById('citations').value,
                 reviewExperience: document.getElementById('reviewExperience').value,
                 editorExperience: document.getElementById('editorExperience').value,
@@ -539,9 +682,11 @@
                 expertise1: document.getElementById('expertise1').value,
                 expertise2: document.getElementById('expertise2').value,
                 expertise3: document.getElementById('expertise3').value,
+                keywords: document.getElementById('keywords').value,
                 availability: document.getElementById('availability').value,
                 cvLink: document.getElementById('cvLink').value,
-                comments: document.getElementById('comments').value
+                comments: document.getElementById('comments').value,
+                declaration: document.getElementById('declaration').checked
             };
             
             // Show loading
@@ -549,7 +694,7 @@
             document.getElementById('submitBtn').disabled = true;
             
             try {
-                // Send to Google Sheets
+                // Send to Google Apps Script
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
