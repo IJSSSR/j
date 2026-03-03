@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 30px 20px;
         }
@@ -28,7 +28,7 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -53,20 +53,16 @@
             border-radius: 10px;
             padding: 25px;
             margin-bottom: 25px;
-            border-left: 4px solid #2c3e50;
+            border-left: 4px solid #667eea;
         }
         
         .section h3 {
-            color: #2c3e50;
+            color: #333;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 1.2em;
-        }
-        
-        .section h3 i {
-            font-size: 1.3em;
         }
         
         .checkbox-group {
@@ -89,8 +85,8 @@
         }
         
         .checkbox-item:hover {
-            border-color: #2c3e50;
-            background: #e8f0fe;
+            border-color: #667eea;
+            background: #f0f3ff;
         }
         
         .checkbox-item.selected {
@@ -116,12 +112,6 @@
             gap: 20px;
         }
         
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
         .form-group {
             margin-bottom: 15px;
         }
@@ -130,18 +120,10 @@
             grid-column: span 2;
         }
         
-        .full-width-3 {
-            grid-column: span 3;
-        }
-        
-        .full-width-4 {
-            grid-column: span 4;
-        }
-        
         label {
             display: block;
             margin-bottom: 5px;
-            color: #2c3e50;
+            color: #333;
             font-weight: 600;
             font-size: 14px;
         }
@@ -150,14 +132,6 @@
             content: "*";
             color: #e74c3c;
             margin-left: 4px;
-            font-size: 16px;
-        }
-        
-        .optional {
-            color: #7f8c8d;
-            font-size: 12px;
-            font-weight: normal;
-            margin-left: 5px;
         }
         
         .hint {
@@ -178,22 +152,12 @@
         
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #2c3e50;
-            box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
-        }
-        
-        input[type="url"] {
-            font-family: monospace;
-        }
-        
-        .id-format {
-            font-size: 11px;
-            color: #3498db;
-            margin-top: 3px;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
         button {
-            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -208,13 +172,357 @@
         
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
         
         button:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+        }
+        
+        /* 🎉 SHAANDAR POPUP STYLES */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+        }
+        
+        .popup-container {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            animation: slideUp 0.5s ease;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .popup-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 30px 30px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .popup-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            color: #27ae60;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .popup-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .popup-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .popup-body {
+            padding: 30px;
+        }
+        
+        .applicant-details {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #667eea;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            width: 140px;
+            color: #667eea;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #333;
+        }
+        
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .badge i {
+            font-size: 16px;
+        }
+        
+        /* Membership Interest Section */
+        .membership-section {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #ff9800;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .membership-section::before {
+            content: '🎁';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 80px;
+            opacity: 0.2;
+            transform: rotate(15deg);
+        }
+        
+        .membership-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e65100;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .membership-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .membership-card {
+            background: white;
+            border: 3px solid #ff9800;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .membership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.3);
+        }
+        
+        .membership-card.selected {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .membership-card.selected h4,
+        .membership-card.selected p {
+            color: white;
+        }
+        
+        .membership-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .membership-card h4 {
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+        
+        .membership-card p {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        .membership-card.selected .membership-icon {
+            color: white;
+        }
+        
+        .feature-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #e65100;
+        }
+        
+        .feature-item i {
+            color: #4caf50;
+        }
+        
+        .interest-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn-interest {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .btn-yes {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+        }
+        
+        .btn-yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .btn-later {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+        }
+        
+        .btn-later:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 152, 0, 0.4);
+        }
+        
+        .btn-no {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            color: white;
+        }
+        
+        .btn-no:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(244, 67, 54, 0.4);
+        }
+        
+        .popup-footer {
+            padding: 20px 30px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .btn-close {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f1c40f;
+            position: absolute;
+            animation: confetti 3s ease-in-out infinite;
+            z-index: 10000;
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
         
         .loading {
@@ -227,7 +535,7 @@
             background: rgba(0,0,0,0.5);
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 9998;
         }
         
         .loading.active {
@@ -238,7 +546,7 @@
             width: 50px;
             height: 50px;
             border: 5px solid white;
-            border-top: 5px solid #2c3e50;
+            border-top: 5px solid #667eea;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -257,27 +565,16 @@
             color: white;
             font-weight: bold;
             display: none;
-            z-index: 1001;
+            z-index: 10002;
             animation: slideIn 0.3s;
         }
         
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
         .toast.success {
-            background: #27ae60;
+            background: #4caf50;
         }
         
         .toast.error {
-            background: #e74c3c;
+            background: #f44336;
         }
         
         .toast.show {
@@ -285,11 +582,18 @@
         }
         
         @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4 {
+            .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
             }
-            .full-width, .full-width-3, .full-width-4 {
+            .full-width {
                 grid-column: span 1;
+            }
+            .detail-row {
+                flex-direction: column;
+            }
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -305,7 +609,7 @@
             <form id="applicationForm">
                 <!-- Positions Selection -->
                 <div class="section">
-                    <h3><i>📌</i> Position Applied For (Select any)</h3>
+                    <h3>📌 Position Applied For</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" name="positions" value="Associate Editor">
@@ -324,163 +628,119 @@
                 
                 <!-- Journals Selection -->
                 <div class="section">
-                    <h3><i>📚</i> Journals (Select any)</h3>
+                    <h3>📚 Journals</h3>
                     <div class="checkbox-group">
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJSSR (2583-7877)">
-                            <span>🌍 International Journal of Science and Social Science Research<br><small>ISSN: 2583-7877</small></span>
+                            <span>🌍 IJSSR - Science & Social Science<br><small>ISSN: 2583-7877</small></span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJSESR (3049-2793)">
-                            <span>⚙️ International Journal of Science and Engineering Science Research<br><small>ISSN: 3049-2793</small></span>
+                            <span>⚙️ IJSESR - Science & Engineering<br><small>ISSN: 3049-2793</small></span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" name="journals" value="IJEIR (3049-4052)">
-                            <span>🎓 International Journal of Educational Innovations and Research<br><small>ISSN: 3049-4052</small></span>
+                            <span>🎓 IJEIR - Educational Innovations<br><small>ISSN: 3049-4052</small></span>
                         </label>
                     </div>
                 </div>
                 
                 <!-- Personal Information -->
                 <div class="section">
-                    <h3><i>👤</i> Personal Information</h3>
+                    <h3>👤 Personal Information</h3>
                     <div class="grid-2">
                         <div class="form-group full-width">
                             <label class="required">Full Name (with Title)</label>
                             <input type="text" name="fullName" id="fullName" required placeholder="Prof./Dr. John Doe">
-                            <div class="hint">Include your title (Prof/Dr/Mr/Mrs)</div>
                         </div>
-                        
                         <div class="form-group">
                             <label class="required">Email</label>
                             <input type="email" name="email" id="email" required placeholder="john.doe@university.edu">
                         </div>
-                        
                         <div class="form-group">
-                            <label class="required">Phone (with WhatsApp)</label>
+                            <label class="required">Phone (WhatsApp)</label>
                             <input type="text" name="phone" id="phone" required placeholder="+1 234 567 890">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Institutional Information (MUST) -->
+                <!-- Institutional Information -->
                 <div class="section">
-                    <h3><i>🏛️</i> Institutional Information <span style="color:#e74c3c; font-size:0.8em;">(Mandatory)</span></h3>
+                    <h3>🏛️ Institutional Information</h3>
                     <div class="grid-2">
                         <div class="form-group full-width">
-                            <label class="required">Current Affiliation/Institution</label>
+                            <label class="required">Current Affiliation</label>
                             <input type="text" name="affiliation" id="affiliation" required placeholder="University/Institute Name">
                         </div>
-                        
                         <div class="form-group">
                             <label class="required">Department</label>
                             <input type="text" name="department" id="department" required placeholder="Department Name">
                         </div>
-                        
                         <div class="form-group">
-                            <label class="required">Designation/Position</label>
-                            <input type="text" name="designation" id="designation" required placeholder="Professor/Associate Professor/Scientist">
+                            <label class="required">Designation</label>
+                            <input type="text" name="designation" id="designation" required placeholder="Professor/Scientist">
                         </div>
-                        
                         <div class="form-group">
                             <label class="required">Country</label>
-                            <input type="text" name="country" id="country" required placeholder="Country Name">
+                            <input type="text" name="country" id="country" required placeholder="Country">
                         </div>
-                        
                         <div class="form-group full-width">
-                            <label class="required">Institutional Profile/Lab Website</label>
-                            <input type="url" name="institutionalProfile" id="institutionalProfile" required placeholder="https://www.university.edu/faculty/profile">
-                            <div class="hint">Your official university/institution profile page link</div>
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label class="required">Institutional Email ID</label>
-                            <input type="email" name="institutionalEmail" id="institutionalEmail" required placeholder="john.doe@university.edu">
-                            <div class="hint">Must be your official university email</div>
+                            <label class="required">Institutional Email</label>
+                            <input type="email" name="institutionalEmail" id="institutionalEmail" required placeholder="official@university.edu">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Academic IDs Section -->
+                <!-- Academic IDs -->
                 <div class="section">
-                    <h3><i>🔬</i> Academic & Researcher IDs <span style="color:#7f8c8d; font-size:0.8em;">(At least one required)</span></h3>
+                    <h3>🔬 Academic IDs</h3>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Google Scholar ID/Profile</label>
-                            <input type="url" name="googleScholar" id="googleScholar" placeholder="https://scholar.google.com/citations?user=...">
-                            <div class="id-format">Format: scholar.google.com/citations?user=XXXX</div>
+                            <label>Google Scholar</label>
+                            <input type="url" name="googleScholar" id="googleScholar" placeholder="https://scholar.google.com/...">
                         </div>
-                        
-                        <div class="form-group">
-                            <label>ResearchGate Profile</label>
-                            <input type="url" name="researchGate" id="researchGate" placeholder="https://www.researchgate.net/profile/...">
-                            <div class="id-format">Format: researchgate.net/profile/YourName</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Scopus Author ID</label>
-                            <input type="text" name="scopusId" id="scopusId" placeholder="57212345678">
-                            <div class="id-format">Scopus ID (8-11 digits)</div>
-                        </div>
-                        
                         <div class="form-group">
                             <label>ORCID ID</label>
                             <input type="text" name="orcid" id="orcid" placeholder="0000-0002-1825-0097">
-                            <div class="id-format">Format: 0000-0002-1825-0097</div>
                         </div>
-                        
                         <div class="form-group">
-                            <label>Web of Science/ResearcherID</label>
-                            <input type="text" name="researcherId" id="researcherId" placeholder="A-1234-2020">
-                            <div class="id-format">ResearcherID or Web of Science ID</div>
+                            <label>Scopus ID</label>
+                            <input type="text" name="scopusId" id="scopusId" placeholder="57212345678">
                         </div>
-                        
                         <div class="form-group">
-                            <label>PubMed ID/NIH Profile</label>
-                            <input type="text" name="pubmedId" id="pubmedId" placeholder="Enter ID if applicable">
+                            <label>ResearchGate</label>
+                            <input type="url" name="researchGate" id="researchGate" placeholder="https://www.researchgate.net/...">
                         </div>
                     </div>
                 </div>
                 
                 <!-- Academic Qualifications -->
                 <div class="section">
-                    <h3><i>🎓</i> Academic Qualifications</h3>
+                    <h3>🎓 Academic Qualifications</h3>
                     <div class="grid-3">
                         <div class="form-group">
                             <label class="required">Highest Degree</label>
                             <select name="highestDegree" id="highestDegree" required>
-                                <option value="">Select Degree</option>
+                                <option value="">Select</option>
                                 <option value="PhD">PhD</option>
                                 <option value="MD">MD</option>
-                                <option value="DSc">DSc</option>
                                 <option value="Master's">Master's</option>
-                                <option value="Bachelor's">Bachelor's</option>
                             </select>
                         </div>
-                        
                         <div class="form-group">
-                            <label>Year of PhD/Doctorate</label>
+                            <label>PhD Year</label>
                             <input type="text" name="phdYear" id="phdYear" placeholder="2020">
-                            <div class="hint">Year of completion</div>
                         </div>
-                        
                         <div class="form-group">
                             <label class="required">Total Publications</label>
                             <input type="number" name="totalPublications" id="totalPublications" required min="0">
                         </div>
-                        
                         <div class="form-group">
-                            <label>h-index (Scopus/Google)</label>
+                            <label>h-index</label>
                             <input type="number" name="hindex" id="hindex" min="0">
                         </div>
-                        
                         <div class="form-group">
-                            <label>i10-index</label>
-                            <input type="number" name="i10index" id="i10index" min="0">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Total Citations</label>
+                            <label>Citations</label>
                             <input type="number" name="citations" id="citations" min="0">
                         </div>
                     </div>
@@ -488,91 +748,63 @@
                 
                 <!-- Experience -->
                 <div class="section">
-                    <h3><i>💼</i> Editorial & Review Experience</h3>
+                    <h3>💼 Experience</h3>
                     <div class="grid-3">
                         <div class="form-group">
-                            <label>Peer Review Experience (Years)</label>
+                            <label>Review Experience (Years)</label>
                             <input type="number" name="reviewExperience" id="reviewExperience" min="0">
                         </div>
-                        
                         <div class="form-group">
-                            <label>Editorial Board Experience (Years)</label>
+                            <label>Editor Experience (Years)</label>
                             <input type="number" name="editorExperience" id="editorExperience" min="0">
                         </div>
-                        
                         <div class="form-group">
-                            <label>Guest Editor Experience (Years)</label>
+                            <label>Guest Editor (Years)</label>
                             <input type="number" name="guestEditorExperience" id="guestEditorExperience" min="0">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Total Reviews Done</label>
-                            <input type="number" name="previousReviews" id="previousReviews" min="0">
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label>Previous Editorial Board Memberships</label>
-                            <textarea name="previousBoards" id="previousBoards" rows="2" placeholder="List journals where you served as editor/reviewer"></textarea>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Areas of Expertise -->
+                <!-- Expertise -->
                 <div class="section">
-                    <h3><i>🔬</i> Areas of Expertise</h3>
+                    <h3>🔬 Areas of Expertise</h3>
                     <div class="grid-3">
                         <div class="form-group">
-                            <label class="required">Primary Research Area 1</label>
+                            <label class="required">Area 1</label>
                             <input type="text" name="expertise1" id="expertise1" required placeholder="e.g., Machine Learning">
                         </div>
                         <div class="form-group">
-                            <label class="required">Research Area 2</label>
+                            <label class="required">Area 2</label>
                             <input type="text" name="expertise2" id="expertise2" required placeholder="e.g., Data Science">
                         </div>
                         <div class="form-group">
-                            <label class="required">Research Area 3</label>
-                            <input type="text" name="expertise3" id="expertise3" required placeholder="e.g., Artificial Intelligence">
-                        </div>
-                        <div class="form-group full-width">
-                            <label>Additional Keywords (comma separated)</label>
-                            <input type="text" name="keywords" id="keywords" placeholder="deep learning, neural networks, computer vision">
+                            <label class="required">Area 3</label>
+                            <input type="text" name="expertise3" id="expertise3" required placeholder="e.g., AI">
                         </div>
                     </div>
                 </div>
                 
                 <!-- Availability -->
                 <div class="section">
-                    <h3><i>📅</i> Availability & Additional Info</h3>
+                    <h3>📅 Availability</h3>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label class="required">Available for Reviews (per month)</label>
+                            <label class="required">Reviews per month</label>
                             <select name="availability" id="availability" required>
                                 <option value="">Select</option>
                                 <option value="1-2">1-2 papers/month</option>
                                 <option value="3-4">3-4 papers/month</option>
                                 <option value="5+">5+ papers/month</option>
-                                <option value="Special Issue Only">Special Issue Only</option>
                             </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>CV/Resume Link</label>
-                            <input type="url" name="cvLink" id="cvLink" placeholder="Google Drive/Dropbox/Institutional link">
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label>Additional Comments</label>
-                            <textarea name="comments" id="comments" rows="3" placeholder="Any additional information you'd like to share..."></textarea>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Declaration -->
-                <div class="section" style="background: #fff3e0;">
-                    <h3><i>✓</i> Declaration</h3>
+                <div class="section">
                     <label style="display: flex; align-items: center; gap: 10px;">
                         <input type="checkbox" name="declaration" id="declaration" required>
-                        <span>I hereby declare that all the information provided is true and correct to the best of my knowledge. I agree to the terms and conditions of the editorial board.</span>
+                        <span>I declare that all information is true and correct</span>
                     </label>
                 </div>
                 
@@ -581,28 +813,127 @@
         </div>
     </div>
     
-    <!-- Loading -->
+    <!-- Loading Spinner -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
     </div>
     
-    <!-- Toast -->
+    <!-- Toast Message -->
     <div class="toast" id="toast"></div>
+    
+    <!-- 🎉 SHAANDAR THANK YOU POPUP WITH MEMBERSHIP INTEREST -->
+    <div class="popup-overlay" id="thankYouPopup">
+        <div class="popup-container">
+            <div class="popup-header">
+                <div class="success-icon">✅</div>
+                <h2>Thank You!</h2>
+                <p>Your application has been submitted successfully</p>
+            </div>
+            
+            <div class="popup-body">
+                <!-- Applicant Details (will be filled by JavaScript) -->
+                <div class="applicant-details" id="applicantDetails">
+                    <div class="detail-row">
+                        <span class="detail-label">Name:</span>
+                        <span class="detail-value" id="popupName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Email:</span>
+                        <span class="detail-value" id="popupEmail">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Position:</span>
+                        <span class="detail-value" id="popupPosition">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Journal:</span>
+                        <span class="detail-value" id="popupJournal">-</span>
+                    </div>
+                </div>
+                
+                <!-- Badges -->
+                <div class="badge-container" id="badgeContainer"></div>
+                
+                <!-- 🎁 MEMBERSHIP INTEREST SECTION -->
+                <div class="membership-section">
+                    <div class="membership-title">
+                        <span>🎁</span>
+                        <span>Special Membership Benefits!</span>
+                    </div>
+                    
+                    <p style="margin-bottom: 20px; color: #e65100;">Based on your expertise, you qualify for additional membership benefits:</p>
+                    
+                    <div class="membership-options">
+                        <div class="membership-card" onclick="selectMembership(this, 'lifetime')">
+                            <div class="membership-icon">👑</div>
+                            <h4>Lifetime Member</h4>
+                            <p>One-time fee • All benefits</p>
+                        </div>
+                        <div class="membership-card" onclick="selectMembership(this, 'annual')">
+                            <div class="membership-icon">📅</div>
+                            <h4>Annual Member</h4>
+                            <p>Yearly subscription • Full access</p>
+                        </div>
+                        <div class="membership-card" onclick="selectMembership(this, 'professional')">
+                            <div class="membership-icon">💼</div>
+                            <h4>Professional</h4>
+                            <p>Networking • Conference access</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span>✓</span> 20% discount on publication fees
+                        </div>
+                        <div class="feature-item">
+                            <span>✓</span> Free access to all webinars
+                        </div>
+                        <div class="feature-item">
+                            <span>✓</span> Networking with editors
+                        </div>
+                        <div class="feature-item">
+                            <span>✓</span> Priority review processing
+                        </div>
+                    </div>
+                    
+                    <div class="interest-buttons">
+                        <button class="btn-interest btn-yes" onclick="handleMembershipResponse('yes')">
+                            👍 Yes, I'm Interested!
+                        </button>
+                        <button class="btn-interest btn-later" onclick="handleMembershipResponse('later')">
+                            ⏰ Remind Me Later
+                        </button>
+                        <button class="btn-interest btn-no" onclick="handleMembershipResponse('no')">
+                            ❌ Not Interested
+                        </button>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; color: #666; margin-top: 20px;">
+                    We'll review your application and contact you within 5-7 business days.
+                </p>
+            </div>
+            
+            <div class="popup-footer">
+                <button class="btn-close" onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
     
     <script>
         // 🔴 APNA GOOGLE APPS SCRIPT URL YAHAN DAALO
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
         
+        // Variables for popup
+        let selectedMembership = null;
+        let currentFormData = null;
+        
         // Checkbox visual effect
         document.querySelectorAll('.checkbox-item').forEach(item => {
             const checkbox = item.querySelector('input[type="checkbox"]');
-            
             checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    item.classList.add('selected');
-                } else {
-                    item.classList.remove('selected');
-                }
+                if (this.checked) item.classList.add('selected');
+                else item.classList.remove('selected');
             });
         });
         
@@ -638,56 +969,39 @@
                 return;
             }
             
-            // Check if at least one academic ID is provided
-            const googleScholar = document.getElementById('googleScholar').value;
-            const researchGate = document.getElementById('researchGate').value;
-            const scopusId = document.getElementById('scopusId').value;
-            const orcid = document.getElementById('orcid').value;
-            
-            if (!googleScholar && !researchGate && !scopusId && !orcid) {
-                showToast('Please provide at least one academic ID (Google Scholar, ResearchGate, Scopus, or ORCID)', 'error');
-                return;
-            }
-            
-            // Collect all form data
+            // Collect form data
             const formData = {
                 positions: positions,
                 journals: journals,
-                fullName: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                affiliation: document.getElementById('affiliation').value,
-                department: document.getElementById('department').value,
-                designation: document.getElementById('designation').value,
-                country: document.getElementById('country').value,
-                institutionalProfile: document.getElementById('institutionalProfile').value,
-                institutionalEmail: document.getElementById('institutionalEmail').value,
-                googleScholar: document.getElementById('googleScholar').value,
-                researchGate: document.getElementById('researchGate').value,
-                scopusId: document.getElementById('scopusId').value,
-                orcid: document.getElementById('orcid').value,
-                researcherId: document.getElementById('researcherId').value,
-                pubmedId: document.getElementById('pubmedId').value,
-                highestDegree: document.getElementById('highestDegree').value,
-                phdYear: document.getElementById('phdYear').value,
-                totalPublications: document.getElementById('totalPublications').value,
-                hindex: document.getElementById('hindex').value,
-                i10index: document.getElementById('i10index').value,
-                citations: document.getElementById('citations').value,
-                reviewExperience: document.getElementById('reviewExperience').value,
-                editorExperience: document.getElementById('editorExperience').value,
-                guestEditorExperience: document.getElementById('guestEditorExperience').value,
-                previousReviews: document.getElementById('previousReviews').value,
-                previousBoards: document.getElementById('previousBoards').value,
-                expertise1: document.getElementById('expertise1').value,
-                expertise2: document.getElementById('expertise2').value,
-                expertise3: document.getElementById('expertise3').value,
-                keywords: document.getElementById('keywords').value,
-                availability: document.getElementById('availability').value,
-                cvLink: document.getElementById('cvLink').value,
-                comments: document.getElementById('comments').value,
-                declaration: document.getElementById('declaration').checked
+                fullName: document.getElementById('fullName')?.value || '',
+                email: document.getElementById('email')?.value || '',
+                phone: document.getElementById('phone')?.value || '',
+                affiliation: document.getElementById('affiliation')?.value || '',
+                department: document.getElementById('department')?.value || '',
+                designation: document.getElementById('designation')?.value || '',
+                country: document.getElementById('country')?.value || '',
+                institutionalEmail: document.getElementById('institutionalEmail')?.value || '',
+                googleScholar: document.getElementById('googleScholar')?.value || '',
+                orcid: document.getElementById('orcid')?.value || '',
+                scopusId: document.getElementById('scopusId')?.value || '',
+                researchGate: document.getElementById('researchGate')?.value || '',
+                highestDegree: document.getElementById('highestDegree')?.value || '',
+                phdYear: document.getElementById('phdYear')?.value || '',
+                totalPublications: document.getElementById('totalPublications')?.value || '',
+                hindex: document.getElementById('hindex')?.value || '',
+                citations: document.getElementById('citations')?.value || '',
+                reviewExperience: document.getElementById('reviewExperience')?.value || '',
+                editorExperience: document.getElementById('editorExperience')?.value || '',
+                guestEditorExperience: document.getElementById('guestEditorExperience')?.value || '',
+                expertise1: document.getElementById('expertise1')?.value || '',
+                expertise2: document.getElementById('expertise2')?.value || '',
+                expertise3: document.getElementById('expertise3')?.value || '',
+                availability: document.getElementById('availability')?.value || '',
+                declaration: 'Yes'
             };
+            
+            // Save for popup
+            currentFormData = formData;
             
             // Show loading
             document.getElementById('loading').classList.add('active');
@@ -704,33 +1018,141 @@
                     body: JSON.stringify(formData)
                 });
                 
-                showToast('✅ Application submitted successfully!', 'success');
-                document.getElementById('applicationForm').reset();
+                // Show success popup
+                showThankYouPopup(formData);
                 
-                // Remove selected class from checkboxes
+                // Reset form
+                document.getElementById('applicationForm').reset();
                 document.querySelectorAll('.checkbox-item').forEach(item => {
                     item.classList.remove('selected');
                 });
                 
             } catch (error) {
+                console.error('Submission error:', error);
                 showToast('❌ Error submitting form. Please try again.', 'error');
-                console.error(error);
             } finally {
                 document.getElementById('loading').classList.remove('active');
                 document.getElementById('submitBtn').disabled = false;
             }
         });
         
+        // 🎉 Show Thank You Popup
+        function showThankYouPopup(data) {
+            // Fill applicant details
+            document.getElementById('popupName').textContent = data.fullName || 'N/A';
+            document.getElementById('popupEmail').textContent = data.email || 'N/A';
+            document.getElementById('popupPosition').textContent = data.positions.join(', ') || 'N/A';
+            document.getElementById('popupJournal').textContent = data.journals.join(', ') || 'N/A';
+            
+            // Create badges
+            const badgeContainer = document.getElementById('badgeContainer');
+            badgeContainer.innerHTML = '';
+            
+            if (data.highestDegree === 'PhD') {
+                badgeContainer.innerHTML += '<span class="badge"><i>🎓</i> PhD</span>';
+            }
+            if (parseInt(data.totalPublications) > 20) {
+                badgeContainer.innerHTML += '<span class="badge"><i>📚</i> Senior Researcher</span>';
+            }
+            if (parseInt(data.reviewExperience) > 5) {
+                badgeContainer.innerHTML += '<span class="badge"><i>⭐</i> Expert Reviewer</span>';
+            }
+            
+            // Show popup
+            document.getElementById('thankYouPopup').classList.add('active');
+            
+            // Create confetti effect
+            createConfetti();
+        }
+        
+        // 🎊 Confetti effect
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 50);
+            }
+        }
+        
+        // 🎁 Membership selection
+        function selectMembership(card, type) {
+            // Remove selected from all
+            document.querySelectorAll('.membership-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+            
+            // Add selected to clicked
+            card.classList.add('selected');
+            selectedMembership = type;
+        }
+        
+        // Handle membership response
+        function handleMembershipResponse(response) {
+            const membershipType = selectedMembership || 'none';
+            
+            // Here you can send this data to Google Sheets as well
+            console.log('Membership interest:', {
+                response: response,
+                membershipType: membershipType,
+                email: currentFormData?.email
+            });
+            
+            let message = '';
+            if (response === 'yes') {
+                message = '🎉 Great! Our team will contact you with membership details.';
+            } else if (response === 'later') {
+                message = '⏰ No problem! We\'ll remind you in a few days.';
+            } else {
+                message = '👍 Thank you for your response!';
+            }
+            
+            // Show toast
+            showToast(message, 'success');
+            
+            // Close popup after 2 seconds
+            setTimeout(() => {
+                closePopup();
+            }, 2000);
+        }
+        
+        // Close popup
+        function closePopup() {
+            document.getElementById('thankYouPopup').classList.remove('active');
+            selectedMembership = null;
+        }
+        
         // Toast function
         function showToast(message, type) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.className = 'toast show ' + type;
-            
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
         }
+        
+        // Close popup with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+        
+        // Close popup when clicking outside
+        window.addEventListener('click', function(e) {
+            const popup = document.getElementById('thankYouPopup');
+            if (e.target === popup) {
+                closePopup();
+            }
+        });
     </script>
 </body>
 </html>
