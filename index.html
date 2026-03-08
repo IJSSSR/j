@@ -732,8 +732,9 @@
     </div>
 
     <script>
-    // 🔴 APNA GOOGLE APPS SCRIPT URL YAHAN DAALO
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/execc';
+    // 🔴 YAHAN APNA SAHI URL DAALO (ek 'c' mat bhoolna)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
+    
     const form = document.getElementById('applicationForm');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
@@ -752,7 +753,7 @@
         });
     });
     
-    // ✅ FINAL FIXED SUBMIT HANDLER
+    // Form submit handler
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -960,6 +961,6 @@
             }, 5000);
         }
     }
-</script>
+    </script>
 </body>
 </html>
