@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        /* Tumhara existing CSS yahi rahega */
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
@@ -17,422 +18,8 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
-            z-index: 1;
         }
-        h2 {
-            text-align: center;
-            color: #1a73e8;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
-        .section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border-left: 4px solid #1a73e8;
-        }
-        .section h3 {
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .full-width {
-            grid-column: span 2;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 5px 0 15px 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: #1a73e8;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
-        }
-        label {
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-        .required::after {
-            content: "*";
-            color: #dc3545;
-            margin-left: 4px;
-        }
-        .hint {
-            color: #666;
-            font-size: 12px;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 16px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-        }
-        button:disabled {
-            background: #ccc;
-            transform: none;
-            cursor: not-allowed;
-        }
-        
-        /* Checkbox Styles */
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .checkbox-item:hover {
-            border-color: #667eea;
-        }
-        .checkbox-item.selected {
-            border-color: #4CAF50;
-            background: #e8f5e9;
-        }
-        .checkbox-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin: 0;
-        }
-        
-        /* Status Message */
-        #status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            display: none;
-            text-align: center;
-            font-weight: 500;
-        }
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-        
-        /* Popup Modal Styles - SHAANDAR */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 10% auto;
-            padding: 40px;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-            animation: slideDown 0.5s ease-out;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-            color: white;
-        }
-        
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .success-icon {
-            width: 100px;
-            height: 100px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            animation: scaleIn 0.5s ease-out 0.2s both;
-        }
-        
-        @keyframes scaleIn {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
-        }
-        
-        .success-icon svg {
-            width: 60px;
-            height: 60px;
-            fill: #4CAF50;
-        }
-        
-        .modal h2 {
-            color: white;
-            margin-bottom: 15px;
-            font-size: 32px;
-            animation: fadeInUp 0.5s ease-out 0.3s both;
-        }
-        
-        .modal p {
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 25px;
-            font-size: 18px;
-            line-height: 1.6;
-            animation: fadeInUp 0.5s ease-out 0.4s both;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        .applicant-summary {
-            background: rgba(255,255,255,0.15);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: left;
-            animation: fadeInUp 0.5s ease-out 0.5s both;
-        }
-        
-        .summary-row {
-            display: flex;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .summary-label {
-            font-weight: bold;
-            width: 120px;
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .summary-value {
-            flex: 1;
-            color: white;
-        }
-        
-        .badge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-            justify-content: center;
-        }
-        
-        .badge {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .membership-section {
-            background: rgba(255,215,0,0.15);
-            border: 2px solid #FFD700;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 25px 0;
-            animation: fadeInUp 0.5s ease-out 0.6s both;
-        }
-        
-        .membership-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #FFD700;
-        }
-        
-        .membership-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .membership-card {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 10px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .membership-card:hover {
-            transform: translateY(-3px);
-            border-color: #FFD700;
-        }
-        
-        .membership-card.selected {
-            background: rgba(255,215,0,0.2);
-            border-color: #FFD700;
-        }
-        
-        .membership-icon {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-        
-        .membership-card h4 {
-            margin: 5px 0;
-            color: white;
-        }
-        
-        .membership-card p {
-            font-size: 12px;
-            margin: 0;
-        }
-        
-        .interest-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .btn-interest {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-        
-        .btn-yes {
-            background: #4CAF50;
-            color: white;
-        }
-        .btn-later {
-            background: #FF9800;
-            color: white;
-        }
-        .btn-no {
-            background: #f44336;
-            color: white;
-        }
-        .btn-interest:hover {
-            transform: scale(1.05);
-        }
-        
-        .modal button {
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: auto;
-            margin-top: 20px;
-            animation: fadeInUp 0.5s ease-out 0.7s both;
-        }
-        
-        .modal button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 35px;
-            color: white;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .close-modal:hover {
-            color: #FFD700;
-        }
-        
-        @media (max-width: 600px) {
-            .grid-2, .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            .full-width {
-                grid-column: span 1;
-            }
-            .membership-options {
-                grid-template-columns: 1fr;
-            }
-        }
+        /* Baaki CSS same rakho */
     </style>
 </head>
 <body>
@@ -661,78 +248,32 @@
     </div>
 
     <!-- SHAANDAR THANK YOU POPUP -->
-    <div id="thankYouModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
+    <div id="thankYouModal" class="modal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7);">
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 10% auto; padding: 40px; border-radius: 30px; width: 90%; max-width: 500px; text-align: center; color: white;">
+            <span onclick="closeModal()" style="position: absolute; top: 20px; right: 25px; font-size: 35px; color: white; cursor: pointer;">&times;</span>
             
-            <div class="success-icon">
-                <svg viewBox="0 0 24 24">
+            <div style="width: 100px; height: 100px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="#4CAF50">
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
                 </svg>
             </div>
             
-            <h2>Thank You! 🎉</h2>
-            <p>Your application has been submitted successfully to the editorial board.</p>
+            <h2 style="color: white; margin-bottom: 15px;">Thank You! 🎉</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Your application has been submitted successfully.</p>
             
-            <!-- Applicant Summary -->
-            <div class="applicant-summary" id="applicantSummary">
-                <div class="summary-row">
-                    <span class="summary-label">Name:</span>
-                    <span class="summary-value" id="popupName">-</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Email:</span>
-                    <span class="summary-value" id="popupEmail">-</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Position:</span>
-                    <span class="summary-value" id="popupPosition">-</span>
-                </div>
-                <div class="summary-row">
-                    <span class="summary-label">Journal:</span>
-                    <span class="summary-value" id="popupJournal">-</span>
-                </div>
+            <div style="background: rgba(255,255,255,0.15); border-radius: 15px; padding: 20px; margin: 25px 0; text-align: left;">
+                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Name:</span> <span id="popupName">-</span></div>
+                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Email:</span> <span id="popupEmail">-</span></div>
+                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Position:</span> <span id="popupPosition">-</span></div>
+                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Journal:</span> <span id="popupJournal">-</span></div>
             </div>
             
-            <!-- Badges -->
-            <div class="badge-container" id="badgeContainer"></div>
-            
-            <!-- MEMBERSHIP INTEREST SECTION -->
-            <div class="membership-section">
-                <div class="membership-title">🎁 Special Membership Benefits!</div>
-                <p>Based on your expertise, you qualify for:</p>
-                
-                <div class="membership-options">
-                    <div class="membership-card" onclick="selectMembership(this, 'lifetime')">
-                        <div class="membership-icon">👑</div>
-                        <h4>Lifetime</h4>
-                        <p>One-time fee</p>
-                    </div>
-                    <div class="membership-card" onclick="selectMembership(this, 'annual')">
-                        <div class="membership-icon">📅</div>
-                        <h4>Annual</h4>
-                        <p>Yearly subscription</p>
-                    </div>
-                    <div class="membership-card" onclick="selectMembership(this, 'professional')">
-                        <div class="membership-icon">💼</div>
-                        <h4>Professional</h4>
-                        <p>Networking benefits</p>
-                    </div>
-                </div>
-                
-                <div class="interest-buttons">
-                    <button class="btn-interest btn-yes" onclick="handleMembership('yes')">👍 Yes</button>
-                    <button class="btn-interest btn-later" onclick="handleMembership('later')">⏰ Later</button>
-                    <button class="btn-interest btn-no" onclick="handleMembership('no')">❌ No</button>
-                </div>
-            </div>
-            
-            <button onclick="closeModal()">Close</button>
+            <button onclick="closeModal()" style="background: white; color: #667eea; border: none; padding: 14px 40px; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px;">Close</button>
         </div>
     </div>
 
     <script>
-    // 🔴 YAHAN APNA SAHI URL DAALO
+    // 🔴 APNA NAYA URL YAHAN DAALO
     const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
     
     const form = document.getElementById('applicationForm');
@@ -741,19 +282,7 @@
     const statusDiv = document.getElementById('status');
     const modal = document.getElementById('thankYouModal');
     
-    // Checkbox visual effect
-    document.querySelectorAll('.checkbox-item').forEach(item => {
-        const checkbox = item.querySelector('input[type="checkbox"]');
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                item.classList.add('selected');
-            } else {
-                item.classList.remove('selected');
-            }
-        });
-    });
-    
-    // ✅ FINAL FIXED SUBMIT HANDLER - NO JSON PARSE ISSUE
+    // Form submit handler
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -790,9 +319,9 @@
             // Create form data
             const formData = new URLSearchParams();
             
-            // Arrays ko comma-separated strings mein convert karo
-            formData.append('positions', positions.join(', '));
-            formData.append('journals', journals.join(', '));
+            // Arrays ko handle karo
+            positions.forEach(pos => formData.append('positions', pos));
+            journals.forEach(jour => formData.append('journals', jour));
             
             // Saare form fields ko append karo
             const fields = [
@@ -823,35 +352,25 @@
                 }
             });
             
-            // Get response as TEXT (not JSON)
-            const responseText = await response.text();
-            console.log('Server response:', responseText);
+            // Get response as JSON
+            const result = await response.json();
             
-            // Check if response starts with SUCCESS
-            if (responseText.startsWith('SUCCESS')) {
+            if (result.success) {
                 showStatus('✅ Application submitted successfully!', 'success');
                 
-                // Form data collect karo popup ke liye
-                const popupData = {
-                    name: document.getElementById('fullName').value,
-                    email: document.getElementById('email').value,
-                    positions: positions,
-                    journals: journals,
-                    highestDegree: document.getElementById('highestDegree').value,
-                    totalPublications: document.getElementById('totalPublications').value
-                };
+                // Show popup
+                document.getElementById('popupName').textContent = document.getElementById('fullName').value || 'N/A';
+                document.getElementById('popupEmail').textContent = document.getElementById('email').value || 'N/A';
+                document.getElementById('popupPosition').textContent = positions.join(', ') || 'N/A';
+                document.getElementById('popupJournal').textContent = journals.join(', ') || 'N/A';
+                
+                modal.style.display = 'block';
                 
                 // Form reset
                 form.reset();
-                document.querySelectorAll('.checkbox-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-                
-                // Show popup
-                showPopup(popupData);
                 
             } else {
-                throw new Error(responseText || 'Unknown error occurred');
+                throw new Error(result.error || 'Unknown error');
             }
             
         } catch (error) {
@@ -862,71 +381,9 @@
         }
     });
     
-    // SHAANDAR POPUP function
-    function showPopup(data) {
-        // Fill applicant details
-        document.getElementById('popupName').textContent = data.name || 'N/A';
-        document.getElementById('popupEmail').textContent = data.email || 'N/A';
-        document.getElementById('popupPosition').textContent = Array.isArray(data.positions) ? data.positions.join(', ') : data.positions || 'N/A';
-        document.getElementById('popupJournal').textContent = Array.isArray(data.journals) ? data.journals.join(', ') : data.journals || 'N/A';
-        
-        // Create badges
-        const badgeContainer = document.getElementById('badgeContainer');
-        if (badgeContainer) {
-            badgeContainer.innerHTML = '';
-            
-            if (data.highestDegree === 'PhD') {
-                badgeContainer.innerHTML += '<span class="badge">🎓 PhD</span>';
-            }
-            if (parseInt(data.totalPublications) > 20) {
-                badgeContainer.innerHTML += '<span class="badge">📚 Senior Researcher</span>';
-            }
-        }
-        
-        // Show modal
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    }
-    
-    // Membership selection
-    let selectedMembership = null;
-    
-    function selectMembership(card, type) {
-        document.querySelectorAll('.membership-card').forEach(c => {
-            c.classList.remove('selected');
-        });
-        card.classList.add('selected');
-        selectedMembership = type;
-    }
-    
-    function handleMembership(response) {
-        console.log('Membership interest:', {
-            response: response,
-            type: selectedMembership
-        });
-        
-        let message = '';
-        if (response === 'yes') {
-            message = '🎉 Great! We\'ll contact you with membership details!';
-        } else if (response === 'later') {
-            message = '⏰ No problem! We\'ll remind you later.';
-        } else {
-            message = '👍 Thank you for your response!';
-        }
-        
-        showStatus(message, 'success');
-        setTimeout(() => {
-            closeModal();
-        }, 1500);
-    }
-    
     // Close modal function
     function closeModal() {
-        if (modal) {
-            modal.style.display = 'none';
-        }
-        selectedMembership = null;
+        modal.style.display = 'none';
     }
     
     // Click outside to close
@@ -935,13 +392,6 @@
             closeModal();
         }
     }
-    
-    // Escape key handler
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeModal();
-        }
-    });
     
     // Loading state
     function setLoading(isLoading) {
@@ -957,8 +407,13 @@
     function showStatus(message, type) {
         if (statusDiv) {
             statusDiv.textContent = message;
-            statusDiv.className = type;
+            statusDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+            statusDiv.style.color = type === 'success' ? '#155724' : '#721c24';
+            statusDiv.style.padding = '12px';
+            statusDiv.style.borderRadius = '8px';
+            statusDiv.style.marginTop = '20px';
             statusDiv.style.display = 'block';
+            
             setTimeout(() => {
                 statusDiv.style.display = 'none';
             }, 5000);
