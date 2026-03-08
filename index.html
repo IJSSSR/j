@@ -732,7 +732,7 @@
     </div>
 
     <script>
-    // 🔴 YAHAN APNA SAHI URL DAALO (ek 'c' mat bhoolna)
+    // 🔴 YAHAN APNA SAHI URL DAALO
     const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
     
     const form = document.getElementById('applicationForm');
@@ -753,7 +753,7 @@
         });
     });
     
-    // Form submit handler
+    // ✅ FINAL FIXED SUBMIT HANDLER - NO JSON PARSE ISSUE
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -823,9 +823,12 @@
                 }
             });
             
-            const result = await response.json();
+            // Get response as TEXT (not JSON)
+            const responseText = await response.text();
+            console.log('Server response:', responseText);
             
-            if (result.success) {
+            // Check if response starts with SUCCESS
+            if (responseText.startsWith('SUCCESS')) {
                 showStatus('✅ Application submitted successfully!', 'success');
                 
                 // Form data collect karo popup ke liye
@@ -848,7 +851,7 @@
                 showPopup(popupData);
                 
             } else {
-                throw new Error(result.error || 'Unknown error occurred');
+                throw new Error(responseText || 'Unknown error occurred');
             }
             
         } catch (error) {
