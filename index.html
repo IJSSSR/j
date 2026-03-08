@@ -273,152 +273,166 @@
     </div>
 
     <script>
-    // 🔴 APNA NAYA URL YAHAN DAALO
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
+// 🔴 APNA NAYA URL YAHAN DAALO
+const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
+
+const form = document.getElementById('applicationForm');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+const statusDiv = document.getElementById('status');
+const modal = document.getElementById('thankYouModal');
+
+// Form submit handler
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
     
-    const form = document.getElementById('applicationForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const statusDiv = document.getElementById('status');
-    const modal = document.getElementById('thankYouModal');
+    // Get selected positions
+    const positionCheckboxes = document.querySelectorAll('input[name="positions"]:checked');
+    const positions = Array.from(positionCheckboxes).map(cb => cb.value);
     
-    // Form submit handler
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
+    // Get selected journals
+    const journalCheckboxes = document.querySelectorAll('input[name="journals"]:checked');
+    const journals = Array.from(journalCheckboxes).map(cb => cb.value);
+    
+    // Validation
+    if (positions.length === 0) {
+        showStatus('❌ Please select at least one position!', 'error');
+        return;
+    }
+    
+    if (journals.length === 0) {
+        showStatus('❌ Please select at least one journal!', 'error');
+        return;
+    }
+    
+    if (!document.getElementById('declaration').checked) {
+        showStatus('❌ Please accept the declaration!', 'error');
+        return;
+    }
+    
+    setLoading(true);
+    
+    try {
+        // Create form data
+        const formData = new URLSearchParams();
         
-        // Get selected positions and journals
-        const positions = [];
-        document.querySelectorAll('input[name="positions"]:checked').forEach(cb => {
-            positions.push(cb.value);
+        // Append each position separately
+        positions.forEach(pos => {
+            formData.append('positions', pos);
         });
         
-        const journals = [];
-        document.querySelectorAll('input[name="journals"]:checked').forEach(cb => {
-            journals.push(cb.value);
+        // Append each journal separately
+        journals.forEach(jour => {
+            formData.append('journals', jour);
         });
         
-        // Validation
-        if (positions.length === 0) {
-            showStatus('❌ Please select at least one position!', 'error');
-            return;
-        }
+        // Append all other fields
+        const fields = [
+            'fullName', 'email', 'phone', 'affiliation', 'department',
+            'designation', 'country', 'institutionalEmail', 'googleScholar',
+            'orcid', 'scopusId', 'researchGate', 'highestDegree', 'phdYear',
+            'totalPublications', 'hindex', 'citations', 'reviewExperience',
+            'editorExperience', 'guestEditorExperience', 'expertise1',
+            'expertise2', 'expertise3', 'availability'
+        ];
         
-        if (journals.length === 0) {
-            showStatus('❌ Please select at least one journal!', 'error');
-            return;
-        }
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element) {
+                formData.append(field, element.value || '');
+            }
+        });
         
-        if (!document.getElementById('declaration').checked) {
-            showStatus('❌ Please accept the declaration!', 'error');
-            return;
-        }
+        // Declaration
+        formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
         
-        setLoading(true);
+        // Submit to Google Apps Script
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        });
         
+        // Get response text first
+        const responseText = await response.text();
+        console.log('Raw response:', responseText);
+        
+        // Try to parse as JSON
+        let result;
         try {
-            // Create form data
-            const formData = new URLSearchParams();
-            
-            // Arrays ko handle karo
-            positions.forEach(pos => formData.append('positions', pos));
-            journals.forEach(jour => formData.append('journals', jour));
-            
-            // Saare form fields ko append karo
-            const fields = [
-                'fullName', 'email', 'phone', 'affiliation', 'department',
-                'designation', 'country', 'institutionalEmail', 'googleScholar',
-                'orcid', 'scopusId', 'researchGate', 'highestDegree', 'phdYear',
-                'totalPublications', 'hindex', 'citations', 'reviewExperience',
-                'editorExperience', 'guestEditorExperience', 'expertise1',
-                'expertise2', 'expertise3', 'availability'
-            ];
-            
-            fields.forEach(field => {
-                const element = document.getElementById(field);
-                if (element) {
-                    formData.append(field, element.value || '');
-                }
-            });
-            
-            // Declaration checkbox
-            formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
-            
-            // Submit to Google Apps Script
-            const response = await fetch(scriptURL, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }
-            });
-            
-            // Get response as JSON
-            const result = await response.json();
-            
-            if (result.success) {
-                showStatus('✅ Application submitted successfully!', 'success');
-                
-                // Show popup
-                document.getElementById('popupName').textContent = document.getElementById('fullName').value || 'N/A';
-                document.getElementById('popupEmail').textContent = document.getElementById('email').value || 'N/A';
-                document.getElementById('popupPosition').textContent = positions.join(', ') || 'N/A';
-                document.getElementById('popupJournal').textContent = journals.join(', ') || 'N/A';
-                
-                modal.style.display = 'block';
-                
-                // Form reset
-                form.reset();
-                
-            } else {
-                throw new Error(result.error || 'Unknown error');
-            }
-            
-        } catch (error) {
-            console.error('Error:', error);
-            showStatus('❌ Error: ' + error.message, 'error');
-        } finally {
-            setLoading(false);
+            result = JSON.parse(responseText);
+        } catch (e) {
+            console.error('JSON parse error:', e);
+            throw new Error('Server returned invalid JSON: ' + responseText.substring(0, 100));
         }
-    });
-    
-    // Close modal function
-    function closeModal() {
-        modal.style.display = 'none';
+        
+        if (result.success) {
+            showStatus('✅ Application submitted successfully!', 'success');
+            
+            // Update popup
+            document.getElementById('popupName').textContent = document.getElementById('fullName').value || 'N/A';
+            document.getElementById('popupEmail').textContent = document.getElementById('email').value || 'N/A';
+            document.getElementById('popupPosition').textContent = positions.join(', ') || 'N/A';
+            document.getElementById('popupJournal').textContent = journals.join(', ') || 'N/A';
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Reset form
+            form.reset();
+            
+        } else {
+            throw new Error(result.error || 'Submission failed');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showStatus('❌ Error: ' + error.message, 'error');
+    } finally {
+        setLoading(false);
     }
-    
-    // Click outside to close
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
+});
+
+// Close modal
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Click outside to close
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+// Loading state
+function setLoading(isLoading) {
+    if (submitBtn) {
+        submitBtn.disabled = isLoading;
+        if (btnText) {
+            btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
         }
     }
-    
-    // Loading state
-    function setLoading(isLoading) {
-        if (submitBtn) {
-            submitBtn.disabled = isLoading;
-            if (btnText) {
-                btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
-            }
-        }
+}
+
+// Status message
+function showStatus(message, type) {
+    if (statusDiv) {
+        statusDiv.textContent = message;
+        statusDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+        statusDiv.style.color = type === 'success' ? '#155724' : '#721c24';
+        statusDiv.style.padding = '12px';
+        statusDiv.style.borderRadius = '8px';
+        statusDiv.style.marginTop = '20px';
+        statusDiv.style.display = 'block';
+        
+        setTimeout(() => {
+            statusDiv.style.display = 'none';
+        }, 5000);
     }
-    
-    // Status message
-    function showStatus(message, type) {
-        if (statusDiv) {
-            statusDiv.textContent = message;
-            statusDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
-            statusDiv.style.color = type === 'success' ? '#155724' : '#721c24';
-            statusDiv.style.padding = '12px';
-            statusDiv.style.borderRadius = '8px';
-            statusDiv.style.marginTop = '20px';
-            statusDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                statusDiv.style.display = 'none';
-            }, 5000);
-        }
-    }
-    </script>
+}
+</script>
 </body>
 </html>
