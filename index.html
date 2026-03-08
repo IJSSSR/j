@@ -753,119 +753,119 @@
         });
         
         // 📌 FIXED FORM SUBMIT HANDLER - Exactly working pattern jaisa
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Get selected positions and journals
-            const positions = [];
-            document.querySelectorAll('input[name="positions"]:checked').forEach(cb => {
-                positions.push(cb.value);
-            });
-            
-            const journals = [];
-            document.querySelectorAll('input[name="journals"]:checked').forEach(cb => {
-                journals.push(cb.value);
-            });
-            
-            // Validation
-            if (positions.length === 0) {
-                showStatus('❌ Please select at least one position!', 'error');
-                return;
-            }
-            
-            if (journals.length === 0) {
-                showStatus('❌ Please select at least one journal!', 'error');
-                return;
-            }
-            
-            if (!document.getElementById('declaration').checked) {
-                showStatus('❌ Please accept the declaration!', 'error');
-                return;
-            }
-            
-            // Show loading
-            setLoading(true);
-            
-            try {
-                // 🔴 FIX 1: URLSearchParams use karo (working pattern)
-                const formData = new URLSearchParams();
-                
-                // Add arrays as comma-separated strings
-                formData.append('positions', positions.join(', '));
-                formData.append('journals', journals.join(', '));
-                
-                // Add all other fields with null checks
-                formData.append('fullName', document.getElementById('fullName')?.value || '');
-                formData.append('email', document.getElementById('email')?.value || '');
-                formData.append('phone', document.getElementById('phone')?.value || '');
-                formData.append('affiliation', document.getElementById('affiliation')?.value || '');
-                formData.append('department', document.getElementById('department')?.value || '');
-                formData.append('designation', document.getElementById('designation')?.value || '');
-                formData.append('country', document.getElementById('country')?.value || '');
-                formData.append('institutionalEmail', document.getElementById('institutionalEmail')?.value || '');
-                formData.append('googleScholar', document.getElementById('googleScholar')?.value || '');
-                formData.append('orcid', document.getElementById('orcid')?.value || '');
-                formData.append('scopusId', document.getElementById('scopusId')?.value || '');
-                formData.append('researchGate', document.getElementById('researchGate')?.value || '');
-                formData.append('highestDegree', document.getElementById('highestDegree')?.value || '');
-                formData.append('phdYear', document.getElementById('phdYear')?.value || '');
-                formData.append('totalPublications', document.getElementById('totalPublications')?.value || '');
-                formData.append('hindex', document.getElementById('hindex')?.value || '');
-                formData.append('citations', document.getElementById('citations')?.value || '');
-                formData.append('reviewExperience', document.getElementById('reviewExperience')?.value || '');
-                formData.append('editorExperience', document.getElementById('editorExperience')?.value || '');
-                formData.append('guestEditorExperience', document.getElementById('guestEditorExperience')?.value || '');
-                formData.append('expertise1', document.getElementById('expertise1')?.value || '');
-                formData.append('expertise2', document.getElementById('expertise2')?.value || '');
-                formData.append('expertise3', document.getElementById('expertise3')?.value || '');
-                formData.append('availability', document.getElementById('availability')?.value || '');
-                formData.append('declaration', 'Yes');
-                
-                // 🔴 FIX 2: Working fetch pattern with headers
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    }
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log('Success:', result);
-                    
-                    showStatus('✅ Application submitted successfully!', 'success');
-                    
-                    // Collect data for popup BEFORE reset
-                    const popupData = {
-                        name: document.getElementById('fullName')?.value || '',
-                        email: document.getElementById('email')?.value || '',
-                        positions: positions,
-                        journals: journals,
-                        highestDegree: document.getElementById('highestDegree')?.value || '',
-                        totalPublications: document.getElementById('totalPublications')?.value || ''
-                    };
-                    
-                    // Form reset
-                    form.reset();
-                    document.querySelectorAll('.checkbox-item').forEach(item => {
-                        item.classList.remove('selected');
-                    });
-                    
-                    // SHAANDAR POPUP with data
-                    showPopup(popupData);
-                    
-                } else {
-                    throw new Error('Server error: ' + response.status);
-                }
-                
-            } catch (error) {
-                console.error('Error:', error);
-                showStatus('❌ Error: ' + error.message, 'error');
-            } finally {
-                setLoading(false);
+ // 📌 FIXED Submit Handler (HTML ke andar)
+
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Get selected positions and journals
+    const positions = [];
+    document.querySelectorAll('input[name="positions"]:checked').forEach(cb => {
+        positions.push(cb.value);
+    });
+    
+    const journals = [];
+    document.querySelectorAll('input[name="journals"]:checked').forEach(cb => {
+        journals.push(cb.value);
+    });
+    
+    // Validation
+    if (positions.length === 0) {
+        showStatus('❌ Please select at least one position!', 'error');
+        return;
+    }
+    
+    if (journals.length === 0) {
+        showStatus('❌ Please select at least one journal!', 'error');
+        return;
+    }
+    
+    if (!document.getElementById('declaration').checked) {
+        showStatus('❌ Please accept the declaration!', 'error');
+        return;
+    }
+    
+    // Show loading
+    setLoading(true);
+    
+    try {
+        const formData = new URLSearchParams();
+        
+        // 🔴 FIX: Arrays ko comma-separated strings mein convert karo
+        formData.append('positions', positions.join(', '));
+        formData.append('journals', journals.join(', '));
+        
+        // Add all fields with null checks
+        formData.append('fullName', document.getElementById('fullName')?.value || '');
+        formData.append('email', document.getElementById('email')?.value || '');
+        formData.append('phone', document.getElementById('phone')?.value || '');
+        formData.append('affiliation', document.getElementById('affiliation')?.value || '');
+        formData.append('department', document.getElementById('department')?.value || '');
+        formData.append('designation', document.getElementById('designation')?.value || '');
+        formData.append('country', document.getElementById('country')?.value || '');
+        formData.append('institutionalEmail', document.getElementById('institutionalEmail')?.value || '');
+        formData.append('googleScholar', document.getElementById('googleScholar')?.value || '');
+        formData.append('orcid', document.getElementById('orcid')?.value || '');
+        formData.append('scopusId', document.getElementById('scopusId')?.value || '');
+        formData.append('researchGate', document.getElementById('researchGate')?.value || '');
+        formData.append('highestDegree', document.getElementById('highestDegree')?.value || '');
+        formData.append('phdYear', document.getElementById('phdYear')?.value || '');
+        formData.append('totalPublications', document.getElementById('totalPublications')?.value || '');
+        formData.append('hindex', document.getElementById('hindex')?.value || '');
+        formData.append('citations', document.getElementById('citations')?.value || '');
+        formData.append('reviewExperience', document.getElementById('reviewExperience')?.value || '');
+        formData.append('editorExperience', document.getElementById('editorExperience')?.value || '');
+        formData.append('guestEditorExperience', document.getElementById('guestEditorExperience')?.value || '');
+        formData.append('expertise1', document.getElementById('expertise1')?.value || '');
+        formData.append('expertise2', document.getElementById('expertise2')?.value || '');
+        formData.append('expertise3', document.getElementById('expertise3')?.value || '');
+        formData.append('availability', document.getElementById('availability')?.value || '');
+        formData.append('declaration', 'Yes');
+        
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
             }
         });
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Success:', result);
+            
+            showStatus('✅ Application submitted successfully!', 'success');
+            
+            // Popup ke liye data collect karo
+            const popupData = {
+                name: document.getElementById('fullName')?.value || '',
+                email: document.getElementById('email')?.value || '',
+                positions: positions,
+                journals: journals,
+                highestDegree: document.getElementById('highestDegree')?.value || '',
+                totalPublications: document.getElementById('totalPublications')?.value || ''
+            };
+            
+            // Form reset
+            form.reset();
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Show popup
+            showPopup(popupData);
+            
+        } else {
+            throw new Error('Server error: ' + response.status);
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showStatus('❌ Error: ' + error.message, 'error');
+    } finally {
+        setLoading(false);
+    }
+});
         
         // SHAANDAR POPUP function
         function showPopup(data) {
