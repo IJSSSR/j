@@ -354,111 +354,184 @@
         </div>
     </div>
 
-    <script>
-    // 🔴 APNA URL YAHAN DAALO
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
-    
-    const form = document.getElementById('applicationForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const statusDiv = document.getElementById('status');
-    const modal = document.getElementById('thankYouModal');
-    
-    // Checkbox styling
-    document.querySelectorAll('.checkbox-item').forEach(item => {
-        const checkbox = item.querySelector('input');
-        checkbox.addEventListener('change', function() {
-            if(this.checked) item.classList.add('selected');
-            else item.classList.remove('selected');
-        });
-    });
-    
-    // Form submit
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        // Get values
-        const positions = Array.from(document.querySelectorAll('input[name="positions"]:checked')).map(cb => cb.value);
-        const journals = Array.from(document.querySelectorAll('input[name="journals"]:checked')).map(cb => cb.value);
-        
-        // Validate
-        if(positions.length === 0) return showStatus('❌ Select position!', 'error');
-        if(journals.length === 0) return showStatus('❌ Select journal!', 'error');
-        if(!document.getElementById('declaration').checked) return showStatus('❌ Accept declaration!', 'error');
-        
-        setLoading(true);
-        
-        try {
-            // Create form data
-            const formData = new URLSearchParams();
-            
-            positions.forEach(p => formData.append('positions', p));
-            journals.forEach(j => formData.append('journals', j));
-            
-            // Add all fields
-            ['fullName','email','phone','affiliation','department','designation','country',
-             'institutionalEmail','googleScholar','orcid','scopusId','researchGate',
-             'highestDegree','phdYear','totalPublications','hindex','citations',
-             'reviewExperience','editorExperience','guestEditorExperience',
-             'expertise1','expertise2','expertise3','availability'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) formData.append(id, el.value || '');
-            });
-            
-            formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
-            
-            // Submit
-            const response = await fetch(scriptURL, {
-                method: 'POST',
-                body: formData,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-            
-            const text = await response.text();
-            console.log('Response:', text);
-            
-            let result;
-            try {
-                result = JSON.parse(text);
-            } catch(e) {
-                throw new Error('Server returned: ' + text.substring(0, 50));
-            }
-            
-            if(result.success) {
-                showStatus('✅ Success!', 'success');
-                
-                document.getElementById('popupName').textContent = document.getElementById('fullName').value;
-                document.getElementById('popupEmail').textContent = document.getElementById('email').value;
-                document.getElementById('popupPosition').textContent = positions.join(', ');
-                document.getElementById('popupJournal').textContent = journals.join(', ');
-                
-                modal.style.display = 'block';
-                form.reset();
-                document.querySelectorAll('.checkbox-item').forEach(i => i.classList.remove('selected'));
-            } else {
-                throw new Error(result.error || 'Failed');
-            }
-        } catch(error) {
-            showStatus('❌ ' + error.message, 'error');
-        } finally {
-            setLoading(false);
+   <script>
+// 🔴 APNA DEPLOYMENT URL YAHAN DAALO
+const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
+
+const form = document.getElementById('applicationForm');
+const submitBtn = document.getElementById('submitBtn');
+const btnText = document.getElementById('btnText');
+const statusDiv = document.getElementById('status');
+const modal = document.getElementById('thankYouModal');
+
+// Checkbox styling
+document.querySelectorAll('.checkbox-item').forEach(item => {
+    const checkbox = item.querySelector('input[type="checkbox"]');
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            item.classList.add('selected');
+        } else {
+            item.classList.remove('selected');
         }
     });
+});
+
+// Form submit handler
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
     
-    function closeModal() { modal.style.display = 'none'; }
-    window.onclick = e => { if(e.target == modal) closeModal(); };
+    // Get selected positions
+    const positionCheckboxes = document.querySelectorAll('input[name="positions"]:checked');
+    const positions = [];
+    positionCheckboxes.forEach(cb => positions.push(cb.value));
     
-    function setLoading(isLoading) {
-        submitBtn.disabled = isLoading;
-        btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
+    // Get selected journals
+    const journalCheckboxes = document.querySelectorAll('input[name="journals"]:checked');
+    const journals = [];
+    journalCheckboxes.forEach(cb => journals.push(cb.value));
+    
+    // Validation
+    if (positions.length === 0) {
+        showStatus('❌ Please select at least one position!', 'error');
+        return;
     }
     
-    function showStatus(msg, type) {
-        statusDiv.textContent = msg;
+    if (journals.length === 0) {
+        showStatus('❌ Please select at least one journal!', 'error');
+        return;
+    }
+    
+    if (!document.getElementById('declaration').checked) {
+        showStatus('❌ Please accept the declaration!', 'error');
+        return;
+    }
+    
+    setLoading(true);
+    
+    try {
+        // Create form data using URLSearchParams
+        const formData = new URLSearchParams();
+        
+        // Add positions (multiple values with same key)
+        positions.forEach(pos => {
+            formData.append('positions', pos);
+        });
+        
+        // Add journals (multiple values with same key)
+        journals.forEach(jour => {
+            formData.append('journals', jour);
+        });
+        
+        // Add all other fields
+        const fields = [
+            'fullName', 'email', 'phone', 'affiliation', 'department',
+            'designation', 'country', 'institutionalEmail', 'googleScholar',
+            'orcid', 'scopusId', 'researchGate', 'highestDegree', 'phdYear',
+            'totalPublications', 'hindex', 'citations', 'reviewExperience',
+            'editorExperience', 'guestEditorExperience', 'expertise1',
+            'expertise2', 'expertise3', 'availability'
+        ];
+        
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element) {
+                formData.append(field, element.value || '');
+            }
+        });
+        
+        // Add declaration
+        formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
+        
+        // Submit to Google Apps Script
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        });
+        
+        // Get response text
+        const responseText = await response.text();
+        console.log('Raw response:', responseText);
+        
+        // Parse JSON
+        let result;
+        try {
+            result = JSON.parse(responseText);
+        } catch (e) {
+            console.error('JSON parse error:', e);
+            showStatus('❌ Server returned: ' + responseText.substring(0, 100), 'error');
+            setLoading(false);
+            return;
+        }
+        
+        if (result.success) {
+            showStatus('✅ Application submitted successfully!', 'success');
+            
+            // Update popup
+            document.getElementById('popupName').textContent = document.getElementById('fullName').value || 'N/A';
+            document.getElementById('popupEmail').textContent = document.getElementById('email').value || 'N/A';
+            document.getElementById('popupPosition').textContent = positions.join(', ') || 'N/A';
+            document.getElementById('popupJournal').textContent = journals.join(', ') || 'N/A';
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Reset form
+            form.reset();
+            
+            // Remove selected class from checkboxes
+            document.querySelectorAll('.checkbox-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+        } else {
+            throw new Error(result.error || 'Submission failed');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showStatus('❌ Error: ' + error.message, 'error');
+    } finally {
+        setLoading(false);
+    }
+});
+
+// Close modal function
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+// Click outside to close
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+}
+
+// Loading state
+function setLoading(isLoading) {
+    if (submitBtn) {
+        submitBtn.disabled = isLoading;
+        if (btnText) {
+            btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
+        }
+    }
+}
+
+// Status message
+function showStatus(message, type) {
+    if (statusDiv) {
+        statusDiv.textContent = message;
         statusDiv.className = type;
         statusDiv.style.display = 'block';
-        setTimeout(() => statusDiv.style.display = 'none', 5000);
+        
+        setTimeout(() => {
+            statusDiv.style.display = 'none';
+        }, 5000);
     }
-    </script>
+}
+</script>
 </body>
 </html>
