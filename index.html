@@ -754,6 +754,8 @@
         
      // 📌 COMPLETE FIXED Submit Handler - All fields ke saath
 
+// HTML ke submit handler mein YEH changes karo
+
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -784,18 +786,16 @@ form.addEventListener('submit', async function(e) {
         return;
     }
     
-    // Show loading
     setLoading(true);
     
     try {
-        // 🔥 Working pattern: URLSearchParams use karo
         const formData = new URLSearchParams();
         
-        // Arrays ko comma-separated strings mein convert karo
+        // Arrays
         formData.append('positions', positions.join(', '));
         formData.append('journals', journals.join(', '));
         
-        // ALL 29 fields append karo
+        // All form fields - jo bhi aapke HTML mein hain
         formData.append('fullName', document.getElementById('fullName')?.value || '');
         formData.append('email', document.getElementById('email')?.value || '');
         formData.append('phone', document.getElementById('phone')?.value || '');
@@ -822,7 +822,6 @@ form.addEventListener('submit', async function(e) {
         formData.append('availability', document.getElementById('availability')?.value || '');
         formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
         
-        // 🔥 Working pattern: Fetch with correct headers
         const response = await fetch(scriptURL, {
             method: 'POST',
             body: formData,
@@ -833,17 +832,7 @@ form.addEventListener('submit', async function(e) {
         
         if (response.ok) {
             const result = await response.json();
-            console.log('Success:', result);
-            
             showStatus('✅ Application submitted successfully!', 'success');
-            
-            // Collect data for popup
-            const popupData = {
-                name: document.getElementById('fullName')?.value || '',
-                email: document.getElementById('email')?.value || '',
-                positions: positions,
-                journals: journals
-            };
             
             // Form reset
             form.reset();
@@ -852,7 +841,12 @@ form.addEventListener('submit', async function(e) {
             });
             
             // Show popup
-            showPopup(popupData);
+            showPopup({
+                name: document.getElementById('fullName')?.value || '',
+                email: document.getElementById('email')?.value || '',
+                positions: positions,
+                journals: journals
+            });
             
         } else {
             throw new Error('Server error: ' + response.status);
