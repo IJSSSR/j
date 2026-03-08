@@ -752,8 +752,7 @@
             });
         });
         
-        // 📌 FIXED FORM SUBMIT HANDLER - Exactly working pattern jaisa
- // 📌 FIXED Submit Handler (HTML ke andar)
+     // 📌 COMPLETE FIXED Submit Handler - All fields ke saath
 
 form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -789,13 +788,14 @@ form.addEventListener('submit', async function(e) {
     setLoading(true);
     
     try {
+        // 🔥 Working pattern: URLSearchParams use karo
         const formData = new URLSearchParams();
         
-        // 🔴 FIX: Arrays ko comma-separated strings mein convert karo
+        // Arrays ko comma-separated strings mein convert karo
         formData.append('positions', positions.join(', '));
         formData.append('journals', journals.join(', '));
         
-        // Add all fields with null checks
+        // ALL 29 fields append karo
         formData.append('fullName', document.getElementById('fullName')?.value || '');
         formData.append('email', document.getElementById('email')?.value || '');
         formData.append('phone', document.getElementById('phone')?.value || '');
@@ -820,8 +820,9 @@ form.addEventListener('submit', async function(e) {
         formData.append('expertise2', document.getElementById('expertise2')?.value || '');
         formData.append('expertise3', document.getElementById('expertise3')?.value || '');
         formData.append('availability', document.getElementById('availability')?.value || '');
-        formData.append('declaration', 'Yes');
+        formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
         
+        // 🔥 Working pattern: Fetch with correct headers
         const response = await fetch(scriptURL, {
             method: 'POST',
             body: formData,
@@ -836,14 +837,12 @@ form.addEventListener('submit', async function(e) {
             
             showStatus('✅ Application submitted successfully!', 'success');
             
-            // Popup ke liye data collect karo
+            // Collect data for popup
             const popupData = {
                 name: document.getElementById('fullName')?.value || '',
                 email: document.getElementById('email')?.value || '',
                 positions: positions,
-                journals: journals,
-                highestDegree: document.getElementById('highestDegree')?.value || '',
-                totalPublications: document.getElementById('totalPublications')?.value || ''
+                journals: journals
             };
             
             // Form reset
