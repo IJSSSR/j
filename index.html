@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* Tumhara existing CSS yahi rahega */
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
@@ -19,7 +18,137 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        /* Baaki CSS same rakho */
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 30px;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #1a73e8;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0 15px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        .required::after {
+            content: "*";
+            color: #dc3545;
+            margin-left: 4px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+        }
+        button:disabled {
+            background: #ccc;
+            transform: none;
+            cursor: not-allowed;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .checkbox-item.selected {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -52,15 +181,15 @@
                 <div class="checkbox-group">
                     <label class="checkbox-item">
                         <input type="checkbox" name="journals" value="IJSSR (2583-7877)">
-                        <span>🌍 IJSSR - Science & Social Science</span>
+                        <span>🌍 IJSSR</span>
                     </label>
                     <label class="checkbox-item">
                         <input type="checkbox" name="journals" value="IJSESR (3049-2793)">
-                        <span>⚙️ IJSESR - Science & Engineering</span>
+                        <span>⚙️ IJSESR</span>
                     </label>
                     <label class="checkbox-item">
                         <input type="checkbox" name="journals" value="IJEIR (3049-4052)">
-                        <span>🎓 IJEIR - Educational Innovations</span>
+                        <span>🎓 IJEIR</span>
                     </label>
                 </div>
             </div>
@@ -69,19 +198,17 @@
             <div class="section">
                 <h3>👤 Personal Information</h3>
                 <div class="grid-2">
-                    <div class="form-group full-width">
-                        <label class="required">Full Name (with Title)</label>
-                        <input type="text" name="fullName" id="fullName" required placeholder="Prof./Dr. John Doe">
+                    <div class="full-width">
+                        <label class="required">Full Name</label>
+                        <input type="text" id="fullName" required placeholder="Dr. John Doe">
                     </div>
-                    
-                    <div class="form-group">
+                    <div>
                         <label class="required">Email</label>
-                        <input type="email" name="email" id="email" required placeholder="john@university.edu">
+                        <input type="email" id="email" required placeholder="john@university.edu">
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="required">Phone (WhatsApp)</label>
-                        <input type="text" name="phone" id="phone" required placeholder="+1 234 567 890">
+                    <div>
+                        <label class="required">Phone</label>
+                        <input type="text" id="phone" required placeholder="+1 234 567 890">
                     </div>
                 </div>
             </div>
@@ -90,90 +217,60 @@
             <div class="section">
                 <h3>🏛️ Institutional Information</h3>
                 <div class="grid-2">
-                    <div class="form-group full-width">
-                        <label class="required">Current Affiliation</label>
-                        <input type="text" name="affiliation" id="affiliation" required placeholder="University/Institute">
+                    <div class="full-width">
+                        <label class="required">Affiliation</label>
+                        <input type="text" id="affiliation" required placeholder="University">
                     </div>
-                    
-                    <div class="form-group">
+                    <div>
                         <label class="required">Department</label>
-                        <input type="text" name="department" id="department" required placeholder="Department">
+                        <input type="text" id="department" required>
                     </div>
-                    
-                    <div class="form-group">
+                    <div>
                         <label class="required">Designation</label>
-                        <input type="text" name="designation" id="designation" required placeholder="Professor/Scientist">
+                        <input type="text" id="designation" required>
                     </div>
-                    
-                    <div class="form-group">
+                    <div>
                         <label class="required">Country</label>
-                        <input type="text" name="country" id="country" required placeholder="Country">
+                        <input type="text" id="country" required>
                     </div>
-                    
-                    <div class="form-group full-width">
+                    <div class="full-width">
                         <label class="required">Institutional Email</label>
-                        <input type="email" name="institutionalEmail" id="institutionalEmail" required placeholder="official@university.edu">
+                        <input type="email" id="institutionalEmail" required>
                     </div>
                 </div>
             </div>
             
             <!-- Academic IDs -->
             <div class="section">
-                <h3>🔬 Academic & Researcher IDs</h3>
+                <h3>🔬 Academic IDs</h3>
                 <div class="grid-2">
-                    <div class="form-group">
-                        <label>Google Scholar URL</label>
-                        <input type="url" name="googleScholar" id="googleScholar" placeholder="https://scholar.google.com/...">
-                    </div>
-                    <div class="form-group">
-                        <label>ORCID ID</label>
-                        <input type="text" name="orcid" id="orcid" placeholder="0000-0002-1825-0097">
-                    </div>
-                    <div class="form-group">
-                        <label>Scopus ID</label>
-                        <input type="text" name="scopusId" id="scopusId" placeholder="57212345678">
-                    </div>
-                    <div class="form-group">
-                        <label>ResearchGate URL</label>
-                        <input type="url" name="researchGate" id="researchGate" placeholder="https://www.researchgate.net/...">
-                    </div>
+                    <div><label>Google Scholar</label><input type="url" id="googleScholar"></div>
+                    <div><label>ORCID</label><input type="text" id="orcid"></div>
+                    <div><label>Scopus ID</label><input type="text" id="scopusId"></div>
+                    <div><label>ResearchGate</label><input type="url" id="researchGate"></div>
                 </div>
-                <div class="hint">At least one academic ID is recommended</div>
             </div>
             
             <!-- Qualifications -->
             <div class="section">
-                <h3>🎓 Academic Qualifications</h3>
+                <h3>🎓 Qualifications</h3>
                 <div class="grid-3">
-                    <div class="form-group">
+                    <div>
                         <label class="required">Highest Degree</label>
-                        <select name="highestDegree" id="highestDegree" required>
+                        <select id="highestDegree" required>
                             <option value="">Select</option>
                             <option value="PhD">PhD</option>
                             <option value="MD">MD</option>
                             <option value="Master's">Master's</option>
                         </select>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>PhD Year</label>
-                        <input type="text" name="phdYear" id="phdYear" placeholder="2020">
+                    <div><label>PhD Year</label><input type="text" id="phdYear"></div>
+                    <div>
+                        <label class="required">Publications</label>
+                        <input type="number" id="totalPublications" required>
                     </div>
-                    
-                    <div class="form-group">
-                        <label class="required">Total Publications</label>
-                        <input type="number" name="totalPublications" id="totalPublications" required min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>h-index</label>
-                        <input type="number" name="hindex" id="hindex" min="0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Total Citations</label>
-                        <input type="number" name="citations" id="citations" min="0">
-                    </div>
+                    <div><label>h-index</label><input type="number" id="hindex"></div>
+                    <div><label>Citations</label><input type="number" id="citations"></div>
                 </div>
             </div>
             
@@ -181,36 +278,27 @@
             <div class="section">
                 <h3>💼 Experience</h3>
                 <div class="grid-3">
-                    <div class="form-group">
-                        <label>Review Experience (Years)</label>
-                        <input type="number" name="reviewExperience" id="reviewExperience" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Editor Experience (Years)</label>
-                        <input type="number" name="editorExperience" id="editorExperience" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Guest Editor (Years)</label>
-                        <input type="number" name="guestEditorExperience" id="guestEditorExperience" min="0">
-                    </div>
+                    <div><label>Review (Years)</label><input type="number" id="reviewExperience"></div>
+                    <div><label>Editor (Years)</label><input type="number" id="editorExperience"></div>
+                    <div><label>Guest Editor</label><input type="number" id="guestEditorExperience"></div>
                 </div>
             </div>
             
             <!-- Expertise -->
             <div class="section">
-                <h3>🔬 Areas of Expertise</h3>
+                <h3>🔬 Expertise</h3>
                 <div class="grid-3">
-                    <div class="form-group">
+                    <div>
                         <label class="required">Area 1</label>
-                        <input type="text" name="expertise1" id="expertise1" required placeholder="e.g., Machine Learning">
+                        <input type="text" id="expertise1" required>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label class="required">Area 2</label>
-                        <input type="text" name="expertise2" id="expertise2" required placeholder="e.g., Data Science">
+                        <input type="text" id="expertise2" required>
                     </div>
-                    <div class="form-group">
+                    <div>
                         <label class="required">Area 3</label>
-                        <input type="text" name="expertise3" id="expertise3" required placeholder="e.g., Artificial Intelligence">
+                        <input type="text" id="expertise3" required>
                     </div>
                 </div>
             </div>
@@ -218,24 +306,22 @@
             <!-- Availability -->
             <div class="section">
                 <h3>📅 Availability</h3>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label class="required">Reviews per month</label>
-                        <select name="availability" id="availability" required>
-                            <option value="">Select</option>
-                            <option value="1-2">1-2 papers/month</option>
-                            <option value="3-4">3-4 papers/month</option>
-                            <option value="5+">5+ papers/month</option>
-                        </select>
-                    </div>
+                <div>
+                    <label class="required">Reviews per month</label>
+                    <select id="availability" required>
+                        <option value="">Select</option>
+                        <option value="1-2">1-2 papers/month</option>
+                        <option value="3-4">3-4 papers/month</option>
+                        <option value="5+">5+ papers/month</option>
+                    </select>
                 </div>
             </div>
             
             <!-- Declaration -->
             <div class="section">
                 <label style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" name="declaration" id="declaration" required>
-                    <span>I declare that all information provided is true and correct</span>
+                    <input type="checkbox" id="declaration" required>
+                    <span>I declare that all information is true</span>
                 </label>
             </div>
             
@@ -247,195 +333,132 @@
         <div id="status"></div>
     </div>
 
-    <!-- SHAANDAR THANK YOU POPUP -->
-    <div id="thankYouModal" class="modal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7);">
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 10% auto; padding: 40px; border-radius: 30px; width: 90%; max-width: 500px; text-align: center; color: white;">
-            <span onclick="closeModal()" style="position: absolute; top: 20px; right: 25px; font-size: 35px; color: white; cursor: pointer;">&times;</span>
-            
-            <div style="width: 100px; height: 100px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
-                <svg width="60" height="60" viewBox="0 0 24 24" fill="#4CAF50">
+    <!-- Thank You Popup -->
+    <div id="thankYouModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal()" style="position:absolute;top:20px;right:25px;font-size:35px;cursor:pointer;">&times;</span>
+            <div style="width:80px;height:80px;background:white;border-radius:50%;margin:0 auto 20px;">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="#4CAF50">
                     <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
                 </svg>
             </div>
-            
-            <h2 style="color: white; margin-bottom: 15px;">Thank You! 🎉</h2>
-            <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Your application has been submitted successfully.</p>
-            
-            <div style="background: rgba(255,255,255,0.15); border-radius: 15px; padding: 20px; margin: 25px 0; text-align: left;">
-                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Name:</span> <span id="popupName">-</span></div>
-                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Email:</span> <span id="popupEmail">-</span></div>
-                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Position:</span> <span id="popupPosition">-</span></div>
-                <div style="display: flex; margin-bottom: 10px;"><span style="font-weight: bold; width: 120px;">Journal:</span> <span id="popupJournal">-</span></div>
+            <h2 style="color:white;">Thank You! 🎉</h2>
+            <p>Application submitted successfully!</p>
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:15px;margin:20px 0;text-align:left;">
+                <div><strong>Name:</strong> <span id="popupName">-</span></div>
+                <div><strong>Email:</strong> <span id="popupEmail">-</span></div>
+                <div><strong>Position:</strong> <span id="popupPosition">-</span></div>
+                <div><strong>Journal:</strong> <span id="popupJournal">-</span></div>
             </div>
-            
-            <button onclick="closeModal()" style="background: white; color: #667eea; border: none; padding: 14px 40px; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px;">Close</button>
+            <button onclick="closeModal()" style="background:white;color:#667eea;border:none;padding:10px 30px;border-radius:50px;font-size:16px;cursor:pointer;">Close</button>
         </div>
     </div>
 
- <script>
-// 🔴 APNA DEPLOYMENT URL YAHAN DAALO
-const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
-
-const form = document.getElementById('applicationForm');
-const submitBtn = document.getElementById('submitBtn');
-const btnText = document.getElementById('btnText');
-const statusDiv = document.getElementById('status');
-const modal = document.getElementById('thankYouModal');
-
-// Form submit handler
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
+    <script>
+    // 🔴 APNA URL YAHAN DAALO
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbznFK_zPNVbVTs9uixjjW8yvCq-BkPRHzti7EJ2tCfhgcuwIN7hE6ngfR0jUCLQc39d/exec';
     
-    // Get selected positions
-    const positionCheckboxes = document.querySelectorAll('input[name="positions"]:checked');
-    const positions = Array.from(positionCheckboxes).map(cb => cb.value);
+    const form = document.getElementById('applicationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const statusDiv = document.getElementById('status');
+    const modal = document.getElementById('thankYouModal');
     
-    // Get selected journals
-    const journalCheckboxes = document.querySelectorAll('input[name="journals"]:checked');
-    const journals = Array.from(journalCheckboxes).map(cb => cb.value);
-    
-    // Validation
-    if (positions.length === 0) {
-        showStatus('❌ Please select at least one position!', 'error');
-        return;
-    }
-    
-    if (journals.length === 0) {
-        showStatus('❌ Please select at least one journal!', 'error');
-        return;
-    }
-    
-    if (!document.getElementById('declaration').checked) {
-        showStatus('❌ Please accept the declaration!', 'error');
-        return;
-    }
-    
-    setLoading(true);
-    
-    try {
-        // Create form data using URLSearchParams (more reliable)
-        const formData = new URLSearchParams();
-        
-        // Append each position separately
-        positions.forEach(pos => {
-            formData.append('positions', pos);
+    // Checkbox styling
+    document.querySelectorAll('.checkbox-item').forEach(item => {
+        const checkbox = item.querySelector('input');
+        checkbox.addEventListener('change', function() {
+            if(this.checked) item.classList.add('selected');
+            else item.classList.remove('selected');
         });
+    });
+    
+    // Form submit
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        // Append each journal separately
-        journals.forEach(jour => {
-            formData.append('journals', jour);
-        });
+        // Get values
+        const positions = Array.from(document.querySelectorAll('input[name="positions"]:checked')).map(cb => cb.value);
+        const journals = Array.from(document.querySelectorAll('input[name="journals"]:checked')).map(cb => cb.value);
         
-        // Append all other fields
-        const fields = [
-            'fullName', 'email', 'phone', 'affiliation', 'department',
-            'designation', 'country', 'institutionalEmail', 'googleScholar',
-            'orcid', 'scopusId', 'researchGate', 'highestDegree', 'phdYear',
-            'totalPublications', 'hindex', 'citations', 'reviewExperience',
-            'editorExperience', 'guestEditorExperience', 'expertise1',
-            'expertise2', 'expertise3', 'availability'
-        ];
+        // Validate
+        if(positions.length === 0) return showStatus('❌ Select position!', 'error');
+        if(journals.length === 0) return showStatus('❌ Select journal!', 'error');
+        if(!document.getElementById('declaration').checked) return showStatus('❌ Accept declaration!', 'error');
         
-        fields.forEach(field => {
-            const element = document.getElementById(field);
-            if (element) {
-                formData.append(field, element.value || '');
-            }
-        });
+        setLoading(true);
         
-        // Declaration
-        formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
-        
-        // Submit to Google Apps Script
-        const response = await fetch(scriptURL, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        });
-        
-        // Get response as JSON
-        const result = await response.json();
-        
-        if (result.success) {
-            showStatus('✅ Application submitted successfully!', 'success');
+        try {
+            // Create form data
+            const formData = new URLSearchParams();
             
-            // Update popup
-            document.getElementById('popupName').textContent = document.getElementById('fullName').value || 'N/A';
-            document.getElementById('popupEmail').textContent = document.getElementById('email').value || 'N/A';
-            document.getElementById('popupPosition').textContent = positions.join(', ') || 'N/A';
-            document.getElementById('popupJournal').textContent = journals.join(', ') || 'N/A';
+            positions.forEach(p => formData.append('positions', p));
+            journals.forEach(j => formData.append('journals', j));
             
-            // Show modal
-            modal.style.display = 'block';
-            
-            // Reset form
-            form.reset();
-            
-            // Remove selected class from checkboxes
-            document.querySelectorAll('.checkbox-item').forEach(item => {
-                item.classList.remove('selected');
+            // Add all fields
+            ['fullName','email','phone','affiliation','department','designation','country',
+             'institutionalEmail','googleScholar','orcid','scopusId','researchGate',
+             'highestDegree','phdYear','totalPublications','hindex','citations',
+             'reviewExperience','editorExperience','guestEditorExperience',
+             'expertise1','expertise2','expertise3','availability'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) formData.append(id, el.value || '');
             });
             
-        } else {
-            throw new Error(result.error || 'Submission failed');
-        }
-        
-    } catch (error) {
-        console.error('Error:', error);
-        showStatus('❌ Error: ' + error.message, 'error');
-    } finally {
-        setLoading(false);
-    }
-});
-
-// Close modal function
-function closeModal() {
-    modal.style.display = 'none';
-}
-
-// Click outside to close
-window.onclick = function(event) {
-    if (event.target == modal) {
-        closeModal();
-    }
-}
-
-// Loading state
-function setLoading(isLoading) {
-    if (submitBtn) {
-        submitBtn.disabled = isLoading;
-        if (btnText) {
-            btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
-        }
-    }
-}
-
-// Status message
-function showStatus(message, type) {
-    if (statusDiv) {
-        statusDiv.textContent = message;
-        statusDiv.className = type;
-        statusDiv.style.display = 'block';
-        
-        setTimeout(() => {
-            statusDiv.style.display = 'none';
-        }, 5000);
-    }
-}
-
-// Checkbox visual effect
-document.querySelectorAll('.checkbox-item').forEach(item => {
-    const checkbox = item.querySelector('input[type="checkbox"]');
-    checkbox.addEventListener('change', function() {
-        if (this.checked) {
-            item.classList.add('selected');
-        } else {
-            item.classList.remove('selected');
+            formData.append('declaration', document.getElementById('declaration').checked ? 'on' : 'off');
+            
+            // Submit
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                body: formData,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+            
+            const text = await response.text();
+            console.log('Response:', text);
+            
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch(e) {
+                throw new Error('Server returned: ' + text.substring(0, 50));
+            }
+            
+            if(result.success) {
+                showStatus('✅ Success!', 'success');
+                
+                document.getElementById('popupName').textContent = document.getElementById('fullName').value;
+                document.getElementById('popupEmail').textContent = document.getElementById('email').value;
+                document.getElementById('popupPosition').textContent = positions.join(', ');
+                document.getElementById('popupJournal').textContent = journals.join(', ');
+                
+                modal.style.display = 'block';
+                form.reset();
+                document.querySelectorAll('.checkbox-item').forEach(i => i.classList.remove('selected'));
+            } else {
+                throw new Error(result.error || 'Failed');
+            }
+        } catch(error) {
+            showStatus('❌ ' + error.message, 'error');
+        } finally {
+            setLoading(false);
         }
     });
-});
-</script>
+    
+    function closeModal() { modal.style.display = 'none'; }
+    window.onclick = e => { if(e.target == modal) closeModal(); };
+    
+    function setLoading(isLoading) {
+        submitBtn.disabled = isLoading;
+        btnText.innerHTML = isLoading ? '⏳ Submitting...' : '📤 Submit Application';
+    }
+    
+    function showStatus(msg, type) {
+        statusDiv.textContent = msg;
+        statusDiv.className = type;
+        statusDiv.style.display = 'block';
+        setTimeout(() => statusDiv.style.display = 'none', 5000);
+    }
+    </script>
 </body>
 </html>
